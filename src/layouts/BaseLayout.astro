@@ -5,12 +5,14 @@ export interface Props {
   title?: string;
   description?: string;
   image?: string;
+  noindex?: boolean;
 }
 
 const {
   title = "Dubtek — Mobile App Development for Ambitious Teams",
   description = "Dubtek designs and builds iOS, Android, Flutter, and React Native apps for startups and growing companies. From first sketch to App Store launch.",
   image = "/images/og-cover.svg",
+  noindex = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -47,7 +49,7 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ffffff" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
