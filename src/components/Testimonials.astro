@@ -1,0 +1,59 @@
+---
+const testimonials = [
+  {
+    quote:
+      "Dubtek shipped our first release in nine weeks and it hasn't crashed once. They think about the business, not just the build.",
+    name: "Priya Nair",
+    role: "Founder, Fernway",
+  },
+  {
+    quote:
+      "The weekly demos meant zero surprises. We always knew exactly what was done and what was next — rare for an outside team.",
+    name: "Marcus Chen",
+    role: "CTO, Loopline",
+  },
+  {
+    quote:
+      "They rebuilt our onboarding flow and it paid for itself in the first month. Our activation numbers still haven't come back down.",
+    name: "Elena Ruiz",
+    role: "Head of Product, Basecamp Labs",
+  },
+];
+---
+
+<section class="section-pad">
+  <div class="wrap">
+    <div class="max-w-2xl reveal">
+      <span class="eyebrow">What clients say</span>
+      <h2 class="mt-4 text-display-lg font-display font-bold">Feedback from the people who signed off on it.</h2>
+    </div>
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-3">
+      {
+        testimonials.map((t, i) => (
+          <figure class="card reveal flex flex-col p-7" style={`transition-delay:${i * 80}ms`}>
+            <svg width="28" height="20" viewBox="0 0 28 20" fill="none" class="text-accent-200">
+              <path
+                d="M0 20V11.5C0 5.15 4.3.7 11 0v3.9C7.4 4.9 5.5 7.3 5.3 10.5H11V20H0ZM17 20V11.5C17 5.15 21.3.7 28 0v3.9c-3.6 1-5.5 3.4-5.7 6.6H28V20H17Z"
+                fill="currentColor"
+              />
+            </svg>
+            <blockquote class="mt-4 flex-1 text-[0.95rem] leading-relaxed text-ink">"{t.quote}"</blockquote>
+            <figcaption class="mt-6 flex items-center gap-3">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-accent-100 to-accent-50 font-display text-sm font-bold text-accent-600">
+                {t.name
+                  .split(" ")
+                  .map((w) => w[0])
+                  .join("")}
+              </span>
+              <div>
+                <p class="text-sm font-semibold text-ink">{t.name}</p>
+                <p class="text-xs text-ink-faint">{t.role}</p>
+              </div>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

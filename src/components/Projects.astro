@@ -1,0 +1,64 @@
+---
+const projects = [
+  {
+    name: "Fernway",
+    industry: "Outdoor & Travel",
+    stack: ["Flutter", "Firebase", "Mapbox"],
+    outcome: "Grew weekly active users by 3.4x in the first two months after launch.",
+    gradient: "from-emerald-400 to-accent-500",
+  },
+  {
+    name: "Loopline",
+    industry: "SaaS / Team Collaboration",
+    stack: ["React Native", "Node.js", "PostgreSQL"],
+    outcome: "Cut onboarding time from 12 minutes to under 3, lifting activation by 41%.",
+    gradient: "from-accent-500 to-accent-900",
+  },
+  {
+    name: "Basecamp Labs",
+    industry: "Local Services Marketplace",
+    stack: ["Swift", "Kotlin", "Stripe"],
+    outcome: "Processed $1.2M in bookings within the first year on the platform.",
+    gradient: "from-accent-400 to-emerald-500",
+  },
+];
+---
+
+<section id="work" class="section-pad bg-surface-raised">
+  <div class="wrap">
+    <div class="max-w-2xl reveal">
+      <span class="eyebrow">Selected work</span>
+      <h2 class="mt-4 text-display-lg font-display font-bold">Apps that shipped, and kept working.</h2>
+      <p class="mt-4 text-lg text-ink-soft">
+        A few of the products we've taken from idea to install base.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-6 lg:grid-cols-3">
+      {
+        projects.map((p, i) => (
+          <article class="card card-hover reveal overflow-hidden" style={`transition-delay:${i * 80}ms`}>
+            <div class={`relative h-48 bg-gradient-to-br ${p.gradient} p-6`}>
+              <div class="absolute inset-0 opacity-20 [background-size:16px_16px]" style="background-image:radial-gradient(circle,white 1px,transparent 1px)"></div>
+              <div class="relative flex h-full flex-col justify-between">
+                <span class="w-fit rounded-full bg-white/20 px-3 py-1 text-[0.7rem] font-mono uppercase tracking-wide text-white backdrop-blur">
+                  {p.industry}
+                </span>
+                <div class="h-16 w-28 rounded-xl border border-white/30 bg-white/15 backdrop-blur"></div>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-xl font-bold text-ink">{p.name}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">{p.outcome}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {p.stack.map((t) => (
+                  <span class="rounded-full bg-surface-raised px-2.5 py-1 font-mono text-[0.7rem] text-ink-soft">{t}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

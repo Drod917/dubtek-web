@@ -1,0 +1,69 @@
+---
+const benefits = [
+  {
+    title: "Pixel-perfect design",
+    text: "Every screen is reviewed against your brand and platform guidelines before it ships — no rough edges.",
+  },
+  {
+    title: "Native-grade performance",
+    text: "We build for 60fps and instant load times, because a laggy app costs you users faster than a bug.",
+  },
+  {
+    title: "Modern, maintainable stack",
+    text: "Swift, Kotlin, Flutter, and React Native — chosen per project, never forced to fit a template.",
+  },
+  {
+    title: "Transparent communication",
+    text: "A weekly demo and a shared board mean you always know exactly what shipped and what's next.",
+  },
+  {
+    title: "Agile process",
+    text: "Two-week sprints with working builds you can test on your own phone, from week one.",
+  },
+  {
+    title: "Long-term support",
+    text: "OS updates, new devices, and growing traffic — we keep your app running after most agencies disappear.",
+  },
+];
+---
+
+<section class="section-pad bg-surface-raised">
+  <div class="wrap">
+    <div class="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      <div class="reveal">
+        <span class="eyebrow">Why Dubtek</span>
+        <h2 class="mt-4 text-display-lg font-display font-bold">The studio founders call back a second time.</h2>
+        <p class="mt-4 text-lg text-ink-soft">
+          Most agencies optimize for the handoff. We optimize for what happens after launch — because that's when your app
+          actually has to work.
+        </p>
+        <a href="#contact" class="btn-secondary mt-8">Talk through your idea</a>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2">
+        {
+          benefits.map((b, i) => (
+            <div
+              class="reveal rounded-xl2 border border-surface-border bg-white p-6"
+              style={`transition-delay:${(i % 2) * 80}ms`}
+            >
+              <span class="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                  <path
+                    d="M3 8.5 6.2 12 13 4"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <h3 class="mt-4 font-display text-base font-bold text-ink">{b.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">{b.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

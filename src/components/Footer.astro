@@ -1,0 +1,79 @@
+---
+const year = new Date().getFullYear();
+const nav = [
+  { href: "#services", label: "Services" },
+  { href: "#process", label: "Process" },
+  { href: "#work", label: "Work" },
+  { href: "#faq", label: "FAQ" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<footer class="border-t border-surface-border">
+  <div class="wrap py-14">
+    <div class="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
+      <div class="max-w-xs">
+        <a href="#top" class="flex items-center gap-2 font-display text-[1.05rem] font-bold tracking-tight text-ink">
+          <span class="relative flex h-7 w-7 items-center justify-center rounded-lg bg-ink">
+            <span class="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-accent-400 to-accent-600"></span>
+          </span>
+          Dubtek
+        </a>
+        <p class="mt-4 text-sm leading-relaxed text-ink-soft">
+          A mobile app development studio for startups and growing businesses. iOS, Android, Flutter, React Native.
+        </p>
+      </div>
+
+      <nav aria-label="Footer navigation">
+        <p class="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-ink-faint">Navigate</p>
+        <ul class="mt-4 space-y-2.5">
+          {
+            nav.map((l) => (
+              <li>
+                <a href={l.href} class="text-sm text-ink-soft transition-colors hover:text-ink">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <p class="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-ink-faint">Connect</p>
+        <ul class="mt-4 space-y-2.5">
+          <li>
+            <a href="mailto:hello@dubtek.io" class="text-sm text-ink-soft transition-colors hover:text-ink"> hello@dubtek.io </a>
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/company/dubtek"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-ink-soft transition-colors hover:text-ink"
+            >
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/dubtek-web"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-ink-soft transition-colors hover:text-ink"
+            >
+              GitHub
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col-reverse items-center gap-4 border-t border-surface-border pt-6 sm:flex-row sm:justify-between"
+    >
+      <p class="text-xs text-ink-faint">&copy; {year} Dubtek. All rights reserved.</p>
+      <p class="text-xs text-ink-faint">Designed &amp; built with Astro.</p>
+    </div>
+  </div>
+</footer>

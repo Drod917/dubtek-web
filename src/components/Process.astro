@@ -1,0 +1,41 @@
+---
+const steps = [
+  { n: "01", title: "Discovery", text: "We map your goals, users, and constraints in a working session — no generic questionnaires." },
+  { n: "02", title: "Strategy", text: "We choose the right platform and stack for your budget, timeline, and team, and scope the roadmap." },
+  { n: "03", title: "Design", text: "Wireframes become a clickable prototype you can test with real users before development starts." },
+  { n: "04", title: "Development", text: "Two-week sprints, each ending in a build you can install and try on your own device." },
+  { n: "05", title: "Testing", text: "Device labs, automated tests, and QA passes catch issues before your users ever see them." },
+  { n: "06", title: "Launch", text: "We handle store listings, provisioning, and submission so launch day is uneventful — in the best way." },
+  { n: "07", title: "Support", text: "Monitoring, OS updates, and a direct line to your team for as long as your app is live." },
+];
+---
+
+<section id="process" class="section-pad">
+  <div class="wrap">
+    <div class="max-w-2xl reveal">
+      <span class="eyebrow">How we work</span>
+      <h2 class="mt-4 text-display-lg font-display font-bold">Seven stages. One accountable team.</h2>
+      <p class="mt-4 text-lg text-ink-soft">
+        The same sequence runs on every engagement, so you always know what's happening
+        and what happens next.
+      </p>
+    </div>
+
+    <ol class="relative mt-16 max-w-3xl">
+      <div class="absolute left-[19px] top-2 bottom-2 w-px bg-surface-border sm:left-[23px]" aria-hidden="true"></div>
+      {
+        steps.map((s, i) => (
+          <li class="reveal relative flex gap-6 pb-10 last:pb-0" style={`transition-delay:${i * 60}ms`}>
+            <div class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-surface-border bg-white font-mono text-xs font-medium text-accent-600 shadow-soft sm:h-12 sm:w-12">
+              {s.n}
+            </div>
+            <div class="pt-1.5 sm:pt-2.5">
+              <h3 class="font-display text-lg font-bold text-ink">{s.title}</h3>
+              <p class="mt-1.5 max-w-lg text-[0.95rem] leading-relaxed text-ink-soft">{s.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
