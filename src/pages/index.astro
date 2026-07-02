@@ -11,20 +11,32 @@ import Testimonials from "../components/Testimonials.astro";
 import FAQ from "../components/FAQ.astro";
 import CTA from "../components/CTA.astro";
 import Footer from "../components/Footer.astro";
+import UnderConstruction from "../components/UnderConstruction.astro";
+
+// Site isn't ready for public release yet. Flip to `false` to restore the full homepage.
+const UNDER_CONSTRUCTION = true;
 ---
 
-<BaseLayout>
-  <Navbar />
-  <main>
-    <Hero />
-    <TrustedBy />
-    <Services />
-    <WhyChooseUs />
-    <Process />
-    <Projects />
-    <Testimonials />
-    <FAQ />
-    <CTA />
-  </main>
-  <Footer />
+<BaseLayout noindex={UNDER_CONSTRUCTION}>
+  {
+    UNDER_CONSTRUCTION ? (
+      <UnderConstruction />
+    ) : (
+      <>
+        <Navbar />
+        <main>
+          <Hero />
+          <TrustedBy />
+          <Services />
+          <WhyChooseUs />
+          <Process />
+          <Projects />
+          <Testimonials />
+          <FAQ />
+          <CTA />
+        </main>
+        <Footer />
+      </>
+    )
+  }
 </BaseLayout>
