@@ -6,7 +6,7 @@ const SITE_URL = "https://www.dubtek.io";
 
 export default defineConfig({
   site: SITE_URL,
-  base: "/dubtek-web",
+  base: "/dubtek-web/",
   integrations: [
     tailwind({
       applyBaseStyles: false,
