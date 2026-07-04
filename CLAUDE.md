@@ -26,6 +26,7 @@ There is no lint, format, or test tooling configured in this repo.
 - Each file in `src/components/` is a self-contained section (`.astro`) with its own markup and scoped styling via Tailwind classes — there is no shared component state or props flowing between sections.
 - `src/styles/global.css` defines Tailwind layers plus reusable component classes: `.wrap` (content max-width container), `.section-pad`, `.btn`/`.btn-primary`/`.btn-secondary`/`.btn-ghost`, `.card`/`.card-hover`, `.eyebrow`, and `.reveal`/`.reveal.is-visible` (paired with the `IntersectionObserver` in `BaseLayout.astro`). Prefer these over ad-hoc utility combos when styling new sections.
 - `tailwind.config.mjs` defines the design tokens: `ink`/`surface`/`accent`/`emerald` color scales, `display`/`body`/`mono` font families (Manrope/Inter/JetBrains Mono), custom `display-xl/lg/md` font sizes, and custom shadows (`soft`, `card`, `lift`, `glow`). Use these tokens rather than raw hex values or arbitrary Tailwind sizes.
+- `DESIGN_SYSTEM.md` documents the token/component system above with usage guidance; `src/pages/style-guide.astro` (`/style-guide`, not linked from nav, `noindex`) renders it live from the actual config for a visual reference.
 - Path aliases (`tsconfig.json`): `@/*` → `src/*`, `@components/*` → `src/components/*`, `@layouts/*` → `src/layouts/*`.
 - No client JS framework is used anywhere — interactive bits (FAQ disclosure, mobile nav) rely on native HTML (`<details>/<summary>`) or small inline `<script>` blocks in the relevant `.astro` component, kept intentionally tiny.
 

@@ -1,0 +1,241 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import tailwindConfig from "../../tailwind.config.mjs";
+
+const { colors, fontFamily, fontSize, boxShadow, borderRadius, maxWidth } = tailwindConfig.theme.extend;
+
+// Swatches are rendered with inline styles (computed from the config values below)
+// rather than dynamic `bg-${name}` classes, since Tailwind's content scanner can't
+// see class names built at build time — only literal classes written in this file.
+// The class name is still printed as a label so this page stays a usage reference.
+function flattenColors(obj, prefix = "") {
+  const out = [];
+  for (const [key, value] of Object.entries(obj)) {
+    const name = key === "DEFAULT" ? prefix : prefix ? `${prefix}-${key}` : key;
+    if (typeof value === "string") {
+      out.push({ name, hex: value });
+    } else {
+      out.push(...flattenColors(value, prefix ? `${prefix}-${key}` : key));
+    }
+  }
+  return out;
+}
+
+const colorGroups = Object.entries(colors).map(([group, value]) => ({
+  group,
+  swatches: typeof value === "string" ? [{ name: group, hex: value }] : flattenColors(value, group),
+}));
+
+const typeScale = Object.entries(fontSize).map(([name, value]) => {
+  const [size, opts] = value;
+  return { name, size, lineHeight: opts?.lineHeight, letterSpacing: opts?.letterSpacing };
+});
+
+const shadows = Object.entries(boxShadow);
+const radii = Object.entries(borderRadius);
+---
+
+<BaseLayout title="Design System — Dubtek" noindex={true}>
+  <main class="wrap section-pad">
+    <header class="mb-16">
+      <span class="eyebrow">Internal reference</span>
+      <h1 class="mt-4 text-display-lg font-display font-bold text-ink">Dubtek design system</h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+        A living reference for the tokens and component classes defined in <code class="font-mono text-[0.85em]">tailwind.config.mjs</code>
+        and <code class="font-mono text-[0.85em]">src/styles/global.css</code>. Not linked from the site nav — this page exists so
+        new sections stay consistent with the existing ones. See <code class="font-mono text-[0.85em]">DESIGN_SYSTEM.md</code> for the
+        written version of the same guidance.
+      </p>
+    </header>
+
+    <!-- Colors -->
+    <section class="mb-20">
+      <h2 class="text-display-md font-display font-bold text-ink">Colors</h2>
+      <div class="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          colorGroups.map((g) => (
+            <div>
+              <h3 class="font-display text-sm font-bold uppercase tracking-wide text-ink-faint">{g.group}</h3>
+              <div class="mt-3 space-y-3">
+                {g.swatches.map((s) => (
+                  <div class="flex items-center gap-3">
+                    <span
+                      class="h-10 w-10 shrink-0 rounded-lg border border-surface-border"
+                      style={`background-color:${s.hex}`}
+                    />
+                    <div class="min-w-0">
+                      <p class="truncate font-mono text-xs text-ink">{s.name}</p>
+                      <p class="truncate font-mono text-[0.7rem] text-ink-faint">{s.hex}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mt-6 text-sm text-ink-soft">
+        Use <code class="font-mono text-[0.85em]">text-ink-soft</code> for secondary copy and
+        <code class="font-mono text-[0.85em]">text-ink-faint</code> for tertiary/placeholder text — never raw gray hex values.
+      </p>
+    </section>
+
+    <!-- Typography -->
+    <section class="mb-20">
+      <h2 class="text-display-md font-display font-bold text-ink">Typography</h2>
+
+      <div class="mt-8 grid gap-6 sm:grid-cols-3">
+        <div class="card p-6">
+          <p class="font-mono text-xs text-ink-faint">font-display</p>
+          <p class="mt-2 font-display text-2xl font-bold text-ink">Manrope</p>
+          <p class="mt-1 text-xs text-ink-soft">Headings — h1–h4 use this automatically (see global.css)</p>
+        </div>
+        <div class="card p-6">
+          <p class="font-mono text-xs text-ink-faint">font-body</p>
+          <p class="mt-2 font-body text-2xl text-ink">Inter</p>
+          <p class="mt-1 text-xs text-ink-soft">Body copy — the default (set on &lt;body&gt;)</p>
+        </div>
+        <div class="card p-6">
+          <p class="font-mono text-xs text-ink-faint">font-mono</p>
+          <p class="mt-2 font-mono text-2xl text-ink">JetBrains Mono</p>
+          <p class="mt-1 text-xs text-ink-soft">Eyebrows, tags, step numbers — small uppercase labels</p>
+        </div>
+      </div>
+
+      <div class="mt-8 space-y-6">
+        {
+          typeScale.map((t) => (
+            <div class="border-b border-surface-border pb-6">
+              <p class="font-mono text-xs text-ink-faint">
+                text-{t.name} · {t.size}
+                {t.lineHeight ? ` · leading ${t.lineHeight}` : ""}
+                {t.letterSpacing ? ` · tracking ${t.letterSpacing}` : ""}
+              </p>
+              <p
+                class="mt-2 font-display font-bold text-ink"
+                style={`font-size:${t.size};line-height:${t.lineHeight ?? "normal"};letter-spacing:${t.letterSpacing ?? "normal"}`}
+              >
+                Apps that shipped, and kept working.
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Layout -->
+    <section class="mb-20">
+      <h2 class="text-display-md font-display font-bold text-ink">Layout &amp; spacing</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-3">
+        <div class="card p-6">
+          <p class="font-mono text-xs text-ink-faint">.wrap</p>
+          <p class="mt-2 text-sm text-ink-soft">Content max-width container — {maxWidth.content}, with responsive side padding.</p>
+        </div>
+        <div class="card p-6">
+          <p class="font-mono text-xs text-ink-faint">.section-pad</p>
+          <p class="mt-2 text-sm text-ink-soft">Vertical rhythm for full-width sections (py-20 sm:py-28).</p>
+        </div>
+        <div class="card p-6">
+          <p class="font-mono text-xs text-ink-faint">bg-surface / bg-surface-raised</p>
+          <p class="mt-2 text-sm text-ink-soft">Sections alternate these two backgrounds to separate rhythm without borders.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shadows & radius -->
+    <section class="mb-20">
+      <h2 class="text-display-md font-display font-bold text-ink">Shadows &amp; radius</h2>
+      <div class="mt-8 grid gap-8 sm:grid-cols-4">
+        {
+          shadows.map(([name, value]) => (
+            <div class="text-center">
+              <div class="mx-auto h-20 w-20 rounded-xl2 bg-white" style={`box-shadow:${value}`} />
+              <p class="mt-3 font-mono text-xs text-ink-faint">shadow-{name}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-8 grid gap-8 sm:grid-cols-4">
+        {
+          radii.map(([name, value]) => (
+            <div class="text-center">
+              <div class="mx-auto h-20 w-20 border border-surface-border bg-surface-raised" style={`border-radius:${value}`} />
+              <p class="mt-3 font-mono text-xs text-ink-faint">rounded-{name} · {value}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Component classes -->
+    <section class="mb-20">
+      <h2 class="text-display-md font-display font-bold text-ink">Component classes</h2>
+
+      <div class="mt-8 space-y-10">
+        <div>
+          <p class="font-mono text-xs text-ink-faint">.eyebrow</p>
+          <span class="eyebrow mt-2">Small uppercase label</span>
+        </div>
+
+        <div>
+          <p class="font-mono text-xs text-ink-faint">.btn-primary · .btn-secondary · .btn-ghost</p>
+          <div class="mt-3 flex flex-wrap items-center gap-4">
+            <a href="#" class="btn-primary">Primary action</a>
+            <a href="#" class="btn-secondary">Secondary action</a>
+            <a href="#" class="btn-ghost">Ghost action</a>
+          </div>
+          <p class="mt-3 max-w-xl text-sm text-ink-soft">
+            Primary for the one action per section that matters most (usually a CTA). Secondary for an alternate action
+            of equal visual weight. Ghost for low-emphasis inline actions (e.g. "learn more").
+          </p>
+        </div>
+
+        <div>
+          <p class="font-mono text-xs text-ink-faint">.card · .card-hover</p>
+          <div class="mt-3 grid gap-4 sm:grid-cols-2 sm:max-w-xl">
+            <div class="card p-6">
+              <p class="text-sm text-ink-soft">.card — static content container</p>
+            </div>
+            <div class="card card-hover p-6">
+              <p class="text-sm text-ink-soft">.card .card-hover — hover me (lift + border tint)</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="font-mono text-xs text-ink-faint">.reveal</p>
+          <p class="mt-2 max-w-xl text-sm text-ink-soft">
+            Add to any section element to fade/slide it in as it scrolls into view. Paired with the
+            <code class="font-mono text-[0.85em]">IntersectionObserver</code> in <code class="font-mono text-[0.85em]">BaseLayout.astro</code>,
+            which adds <code class="font-mono text-[0.85em]">.is-visible</code> once. Scroll down to see this card animate in.
+          </p>
+          <div class="reveal card mt-4 max-w-xl p-6">
+            <p class="text-sm text-ink-soft">I fade/slide in on scroll.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Known ad-hoc values -->
+    <section>
+      <h2 class="text-display-md font-display font-bold text-ink">Known ad-hoc values</h2>
+      <p class="mt-4 max-w-2xl text-sm text-ink-soft">
+        These raw arbitrary-value classes recur across components without a named token. Flagged here as known debt
+        rather than silently promoted — doing so would mean touching every consuming file, which is out of scope for
+        a documentation pass.
+      </p>
+      <ul class="mt-4 max-w-2xl list-disc space-y-2 pl-5 text-sm text-ink-soft">
+        <li>
+          <code class="font-mono text-[0.85em]">text-[0.7rem]</code> — uppercase/mono micro-labels, used in
+          <code class="font-mono text-[0.85em]">.eyebrow</code> (global.css), <code class="font-mono text-[0.85em]">TrustedBy.astro</code>,
+          and tag pills in <code class="font-mono text-[0.85em]">Projects.astro</code>.
+        </li>
+        <li>
+          <code class="font-mono text-[0.85em]">text-[0.95rem]</code> — comfortable body/button copy, used in
+          <code class="font-mono text-[0.85em]">.btn</code> (global.css), <code class="font-mono text-[0.85em]">Services.astro</code>,
+          <code class="font-mono text-[0.85em]">Process.astro</code>, and <code class="font-mono text-[0.85em]">Testimonials.astro</code>.
+        </li>
+      </ul>
+    </section>
+  </main>
+</BaseLayout>
