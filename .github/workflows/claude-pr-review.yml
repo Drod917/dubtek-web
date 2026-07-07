@@ -27,7 +27,8 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
             Review this pull request (#${{ github.event.pull_request.number }}) as a senior
-            engineer would. Read the diff with `gh pr diff`, check changed files against this
+            engineer would. Read the diff with
+            `gh pr diff ${{ github.event.pull_request.number }}`, check changed files against this
             repo's CLAUDE.md conventions (Tailwind design tokens, existing component patterns,
             Astro architecture), and look for correctness bugs, security issues, and
             inconsistencies with the rest of the codebase.
@@ -48,5 +49,5 @@ jobs:
           claude_args: |
             --model claude-opus-4-8
             --max-turns 10
-            --allowedTools "Read,Grep,Glob,Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr comment:*),Bash(gh pr review --comment*),Bash(gh pr review --approve*)"
-            --disallowedTools "Bash(gh pr review --request-changes*),Bash(git push:*),Bash(git commit:*),Edit,Write"
+            --allowedTools "Read,Grep,Glob,Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr comment:*),Bash(gh pr review ${{ github.event.pull_request.number }} --comment:*),Bash(gh pr review ${{ github.event.pull_request.number }} --approve:*)"
+            --disallowedTools "Bash(gh pr review ${{ github.event.pull_request.number }} --request-changes:*),Bash(git push:*),Bash(git commit:*),Edit,Write"
