@@ -1,0 +1,51 @@
+name: Claude PR Review
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: claude-pr-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Review this pull request (#${{ github.event.pull_request.number }}) as a senior
+            engineer would. Read the diff with `gh pr diff`, check changed files against this
+            repo's CLAUDE.md conventions (Tailwind design tokens, existing component patterns,
+            Astro architecture), and look for correctness bugs, security issues, and
+            inconsistencies with the rest of the codebase.
+
+            Post your findings as a single PR review:
+            - If you find issues worth the author's attention, run
+              `gh pr review ${{ github.event.pull_request.number }} --comment -b "<review body>"`.
+            - If the change looks correct, safe, and consistent with repo conventions, you may
+              approve it with
+              `gh pr review ${{ github.event.pull_request.number }} --approve -b "<short reason>"`.
+            - Under no circumstances run `gh pr review --request-changes`, and do not modify any
+              files, commit, or push. Your only output is the review you post via `gh`.
+
+            Keep the review body concise and specific (file:line references), and skip
+            commentary on generated placeholders explicitly called out in CLAUDE.md
+            (og-cover.svg, favicon.svg, CSS-gradient project placeholders) unless they're
+            directly relevant to the change.
+          claude_args: |
+            --model claude-opus-4-8
+            --max-turns 10
+            --allowedTools "Read,Grep,Glob,Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr comment:*),Bash(gh pr review --comment*),Bash(gh pr review --approve*)"
+            --disallowedTools "Bash(gh pr review --request-changes*),Bash(git push:*),Bash(git commit:*),Edit,Write"
