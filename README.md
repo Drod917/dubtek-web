@@ -35,8 +35,8 @@ public/
 Requires Node.js 18.17+ (20 LTS recommended).
 
 ```bash
-npm install
-npm run dev
+yarn install
+yarn dev
 ```
 
 The site will be available at `http://localhost:4321`.
@@ -44,13 +44,13 @@ The site will be available at `http://localhost:4321`.
 ## Build for production
 
 ```bash
-npm run build
+yarn build
 ```
 
 Static output is written to `dist/`. Preview it locally with:
 
 ```bash
-npm run preview
+yarn preview
 ```
 
 ## Before you deploy — replace these placeholders
@@ -75,26 +75,26 @@ The site builds to plain static files (`dist/`), so any static host works.
 
 ### Netlify
 
-- Build command: `npm run build`
+- Build command: `yarn build`
 - Publish directory: `dist`
 - (Optional) add a `netlify.toml` with the same values if you prefer config-as-code.
 
 ### Vercel
 
 - Framework preset: **Astro** (auto-detected)
-- Build command: `npm run build`
+- Build command: `yarn build`
 - Output directory: `dist`
 
 ### Cloudflare Pages
 
-- Build command: `npm run build`
+- Build command: `yarn build`
 - Build output directory: `dist`
 
 ### GitHub Pages
 
 - Set `site` (and `base` if deploying to a project page, e.g.
   `https://username.github.io/repo-name`) in `astro.config.mjs`.
-- Build with `npm run build` and publish the `dist/` folder via GitHub Actions or
+- Build with `yarn build` and publish the `dist/` folder via GitHub Actions or
   the `gh-pages` branch.
 
 ## Performance notes
