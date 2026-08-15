@@ -17,7 +17,7 @@ import UnderConstruction from "../components/UnderConstruction.astro";
 const UNDER_CONSTRUCTION = true;
 ---
 
-<BaseLayout noindex={UNDER_CONSTRUCTION}>
+<BaseLayout noindex={UNDER_CONSTRUCTION} themeColor={UNDER_CONSTRUCTION ? "#050220" : "#ffffff"}>
   {
     UNDER_CONSTRUCTION ? (
       <UnderConstruction />
