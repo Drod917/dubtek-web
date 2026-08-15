@@ -1,5 +1,7 @@
 ---
+import dubtekLogo from "@/assets/images/dubtek-screenprint-shine-logo.png";
 import LavaBackground from "@components/LavaBackground.astro";
+import { Image } from "astro:assets";
 ---
 
 <main class="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#050220]">
@@ -12,27 +14,18 @@ import LavaBackground from "@components/LavaBackground.astro";
   </div>
 
   <div class="wrap relative py-24 text-center">
-    <a
-      href="/"
-      class="inline-flex items-center gap-2 font-display text-[1.05rem] font-bold tracking-tight text-white [text-shadow:0_2px_16px_rgba(5,2,32,0.8)]"
+    <span class="eyebrow mt-8 justify-center text-white/70 [text-shadow:0_2px_16px_rgba(5,2,32,0.8)]"
+      >Under construction. Check back soon!</span
     >
-      <span class="relative flex h-7 w-7 items-center justify-center rounded-lg bg-white">
-        <span class="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-accent-400 to-accent-600"></span>
-      </span>
-      Dubtek
-    </a>
+    <Image
+      src={dubtekLogo}
+      alt="Dubtek"
+      class="mx-auto mt-4 h-auto w-full max-w-md sm:max-w-lg md:max-w-xl drop-shadow-[0_4px_28px_rgba(5,2,32,0.85)]"
+    />
 
-    <span class="eyebrow mt-8 justify-center text-white/70 [text-shadow:0_2px_16px_rgba(5,2,32,0.8)]">Under construction</span>
-    <h1
-      class="mx-auto mt-4 max-w-2xl text-display-lg font-display font-bold text-white [text-shadow:0_4px_28px_rgba(5,2,32,0.85)]"
-    >
-      Dubtek
-      <!-- We're building something new. -->
-    </h1>
     <p class="mx-auto mt-4 max-w-md text-lg text-white/70 [text-shadow:0_2px_16px_rgba(5,2,32,0.8)]">
       We build thoughtful digital experiences designed around the people using them. Blending technology, creativity, and
-      intuitive design with a research-backed approach—and an obsession with the details. Our site is under construction. Check
-      back soon!
+      intuitive design with a research-backed approach—and an obsession with the details.
       <!-- or reach out if you'd like to talk in the meantime. -->
     </p>
 
