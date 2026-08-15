@@ -13,11 +13,13 @@
 
   html {
     @apply scroll-smooth;
+    overscroll-behavior-y: none;
   }
 
   body {
     @apply bg-surface text-ink font-body antialiased;
     font-feature-settings: "cv11", "ss01";
+    overscroll-behavior-y: none;
   }
 
   h1, h2, h3, h4 {
