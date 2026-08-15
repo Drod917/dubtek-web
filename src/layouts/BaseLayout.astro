@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import tailwindConfig from "../../tailwind.config.mjs";
 
 export interface Props {
   title?: string;
@@ -9,12 +10,15 @@ export interface Props {
   themeColor?: string;
 }
 
+// Keep the html/body backdrop tied to the design token rather than a second hardcoded white.
+const SURFACE = tailwindConfig.theme.extend.colors.surface.DEFAULT;
+
 const {
   title = "Dubtek — Mobile App Development for Ambitious Teams",
   description = "Dubtek designs and builds iOS, Android, Flutter, and React Native apps for startups and growing companies. From first sketch to App Store launch.",
   image = "/images/og-cover.svg",
   noindex = false,
-  themeColor = "#ffffff",
+  themeColor = SURFACE,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);

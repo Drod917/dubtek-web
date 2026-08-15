@@ -1,11 +1,21 @@
 ---
 import dubtekLogo from "@/assets/images/dubtek-screenprint-shine-logo.png";
+import { backdropColor, type PaletteName } from "@/lib/palettes";
 import LavaBackground from "@components/LavaBackground.astro";
 import { Image } from "astro:assets";
+
+export interface Props {
+  palette?: PaletteName;
+}
+
+const { palette = "Ember" } = Astro.props;
 ---
 
-<main class="relative flex h-dvh items-center justify-center overflow-hidden bg-[#050220]">
-  <LavaBackground palette="Ember" />
+<main
+  class="relative flex h-dvh items-center justify-center overflow-hidden"
+  style={`background-color: ${backdropColor(palette)}`}
+>
+  <LavaBackground palette={palette} />
 
   <div
     class="wrap relative pt-[calc(env(safe-area-inset-top)+2.5rem)] pb-[calc(env(safe-area-inset-bottom)+2.5rem)] text-center sm:pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-[calc(env(safe-area-inset-bottom)+4rem)] md:pt-[calc(env(safe-area-inset-top)+6rem)] md:pb-[calc(env(safe-area-inset-bottom)+6rem)]"

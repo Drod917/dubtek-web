@@ -12,15 +12,20 @@ import FAQ from "../components/FAQ.astro";
 import CTA from "../components/CTA.astro";
 import Footer from "../components/Footer.astro";
 import UnderConstruction from "../components/UnderConstruction.astro";
+import { backdropColor, type PaletteName } from "@/lib/palettes";
 
 // Site isn't ready for public release yet. Flip to `false` to restore the full homepage.
 const UNDER_CONSTRUCTION = true;
+const CONSTRUCTION_PALETTE: PaletteName = "Ember";
 ---
 
-<BaseLayout noindex={UNDER_CONSTRUCTION} themeColor={UNDER_CONSTRUCTION ? "#050220" : "#ffffff"}>
+<BaseLayout
+  noindex={UNDER_CONSTRUCTION}
+  themeColor={UNDER_CONSTRUCTION ? backdropColor(CONSTRUCTION_PALETTE) : undefined}
+>
   {
     UNDER_CONSTRUCTION ? (
-      <UnderConstruction />
+      <UnderConstruction palette={CONSTRUCTION_PALETTE} />
     ) : (
       <>
         <Navbar />
