@@ -1,5 +1,5 @@
 ---
-import type { PaletteName } from "@/lib/palettes";
+import type { PaletteName } from "@/styles/palettes";
 
 interface Props {
   palette?: PaletteName;
@@ -15,11 +15,10 @@ const { palette = "Ultraviolet", blobCount = 9, speed = 0.55 } = Astro.props;
   class="pointer-events-none fixed inset-0 h-full w-full"
   data-palette={palette}
   data-blob-count={blobCount}
-  data-speed={speed}
-></canvas>
+  data-speed={speed}></canvas>
 
 <script>
-  import { PALETTES, type PaletteName } from "@/lib/palettes";
+  import { PALETTES, type PaletteName } from "@/styles/palettes";
 
   const VERT = `#version 300 es
 in vec2 a;
@@ -175,9 +174,9 @@ void main(){
     let s = 20260814;
     const rnd = () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
     const balls = Array.from({ length: blobCount }, (_, i) => ({
-      x: (-0.5 + (i + 0.5) / blobCount + (rnd() - 0.5) * 0.25 / blobCount) * 2.05,
+      x: (-0.5 + (i + 0.5) / blobCount + ((rnd() - 0.5) * 0.25) / blobCount) * 2.05,
       period: 38 + rnd() * 30,
-      phase: (i + 0.5) / blobCount + (rnd() - 0.5) * 0.5 / blobCount,
+      phase: (i + 0.5) / blobCount + ((rnd() - 0.5) * 0.5) / blobCount,
       sway: 0.015 + rnd() * 0.025,
       px: rnd() * 6.28,
       py: rnd() * 6.28,
