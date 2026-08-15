@@ -1,26 +1,28 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Navbar from "../components/Navbar.astro";
+import { backdropColor, type PaletteName } from "@/styles/palettes";
+import CTA from "../components/CTA.astro";
+import FAQ from "../components/FAQ.astro";
+import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
-import TrustedBy from "../components/TrustedBy.astro";
-import Services from "../components/Services.astro";
-import WhyChooseUs from "../components/WhyChooseUs.astro";
+import Navbar from "../components/Navbar.astro";
 import Process from "../components/Process.astro";
 import Projects from "../components/Projects.astro";
+import Services from "../components/Services.astro";
 import Testimonials from "../components/Testimonials.astro";
-import FAQ from "../components/FAQ.astro";
-import CTA from "../components/CTA.astro";
-import Footer from "../components/Footer.astro";
+import TrustedBy from "../components/TrustedBy.astro";
 import UnderConstruction from "../components/UnderConstruction.astro";
+import WhyChooseUs from "../components/WhyChooseUs.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 // Site isn't ready for public release yet. Flip to `false` to restore the full homepage.
 const UNDER_CONSTRUCTION = true;
+const CONSTRUCTION_PALETTE: PaletteName = "Ember";
 ---
 
-<BaseLayout noindex={UNDER_CONSTRUCTION}>
+<BaseLayout noindex={UNDER_CONSTRUCTION} themeColor={UNDER_CONSTRUCTION ? backdropColor(CONSTRUCTION_PALETTE) : undefined}>
   {
     UNDER_CONSTRUCTION ? (
-      <UnderConstruction />
+      <UnderConstruction palette={CONSTRUCTION_PALETTE} />
     ) : (
       <>
         <Navbar />

@@ -1,18 +1,24 @@
 ---
 import "../styles/global.css";
+import tailwindConfig from "../../tailwind.config.mjs";
 
 export interface Props {
   title?: string;
   description?: string;
   image?: string;
   noindex?: boolean;
+  themeColor?: string;
 }
+
+// Keep the html/body backdrop tied to the design token rather than a second hardcoded white.
+const SURFACE = tailwindConfig.theme.extend.colors.surface.DEFAULT;
 
 const {
   title = "Dubtek — Mobile App Development for Ambitious Teams",
   description = "Dubtek designs and builds iOS, Android, Flutter, and React Native apps for startups and growing companies. From first sketch to App Store launch.",
   image = "/images/og-cover.svg",
   noindex = false,
+  themeColor = SURFACE,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -39,16 +45,16 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style={`background-color: ${themeColor}`}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content={themeColor} />
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 
     <!-- Open Graph -->
@@ -75,7 +81,7 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body>
+  <body style={`background-color: ${themeColor}`}>
     <slot />
 
     <script>

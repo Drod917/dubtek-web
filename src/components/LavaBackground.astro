@@ -1,6 +1,8 @@
 ---
+import type { PaletteName } from "@/styles/palettes";
+
 interface Props {
-  palette?: "Ember" | "Magenta" | "Ultraviolet" | "Iridescent" | "Medal";
+  palette?: PaletteName;
   blobCount?: number;
   speed?: number;
 }
@@ -13,17 +15,10 @@ const { palette = "Ultraviolet", blobCount = 9, speed = 0.55 } = Astro.props;
   class="pointer-events-none fixed inset-0 h-full w-full"
   data-palette={palette}
   data-blob-count={blobCount}
-  data-speed={speed}
-></canvas>
+  data-speed={speed}></canvas>
 
 <script>
-  const PALETTES: Record<string, { stops: string[]; bg: string[] }> = {
-    Ember: { stops: ["ffe9a3", "ffb020", "ff3a2e", "d0186a", "4a2fd0", "0b1550"], bg: ["05081c", "010207"] },
-    Magenta: { stops: ["ffe2ec", "ff5fa8", "ff1f5e", "c01050", "6a0a3a", "2a0518"], bg: ["1d0310", "080105"] },
-    Ultraviolet: { stops: ["ffd0a0", "ff6a4a", "ff2f4f", "b02ad0", "5a2ee0", "2a1ab0"], bg: ["160c58", "050220"] },
-    Iridescent: { stops: ["eafcff", "58efff", "9a5cff", "ff3fa2", "ff6a2a", "07070c"], bg: ["0b0a14", "000000"] },
-    Medal: { stops: ["f7e2ff", "ffb3f0", "7ee8ff", "3aa8ff", "5b3fd6", "07060f"], bg: ["0a0912", "000000"] },
-  };
+  import { PALETTES, type PaletteName } from "@/styles/palettes";
 
   const VERT = `#version 300 es
 in vec2 a;
@@ -128,7 +123,7 @@ void main(){
     const gl = canvas.getContext("webgl2", { antialias: false });
     if (!gl) return;
 
-    const paletteName = canvas.dataset.palette || "Ember";
+    const paletteName = (canvas.dataset.palette || "Ember") as PaletteName;
     const blobCount = Math.max(3, Math.min(12, parseInt(canvas.dataset.blobCount || "9", 10)));
     const speed = parseFloat(canvas.dataset.speed || "0.55");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -179,9 +174,9 @@ void main(){
     let s = 20260814;
     const rnd = () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
     const balls = Array.from({ length: blobCount }, (_, i) => ({
-      x: (-0.5 + (i + 0.5) / blobCount + (rnd() - 0.5) * 0.25 / blobCount) * 2.05,
+      x: (-0.5 + (i + 0.5) / blobCount + ((rnd() - 0.5) * 0.25) / blobCount) * 2.05,
       period: 38 + rnd() * 30,
-      phase: (i + 0.5) / blobCount + (rnd() - 0.5) * 0.5 / blobCount,
+      phase: (i + 0.5) / blobCount + ((rnd() - 0.5) * 0.5) / blobCount,
       sway: 0.015 + rnd() * 0.025,
       px: rnd() * 6.28,
       py: rnd() * 6.28,
@@ -196,12 +191,20 @@ void main(){
 
     function resize() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(canvas.clientWidth * dpr);
-      canvas.height = Math.round(canvas.clientHeight * dpr);
-      gl.viewport(0, 0, canvas.width, canvas.height);
+      const w = Math.round(canvas.clientWidth * dpr);
+      const h = Math.round(canvas.clientHeight * dpr);
+      if (!w || !h) return;
+      // Assigning canvas.width/height clears the drawing buffer, so only touch it on a real change.
+      if (w === canvas.width && h === canvas.height) return;
+      canvas.width = w;
+      canvas.height = h;
+      gl.viewport(0, 0, w, h);
+      if (reduceMotion) draw(0); // the static path has no loop to redraw the cleared buffer
     }
     window.addEventListener("resize", resize);
+    window.visualViewport?.addEventListener("resize", resize);
     resize();
+    requestAnimationFrame(() => requestAnimationFrame(resize));
 
     function draw(t: number) {
       const asp = canvas.width / Math.max(canvas.height, 1);
@@ -247,27 +250,28 @@ void main(){
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
 
+    let raf = 0;
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        cancelAnimationFrame(raf);
+        window.removeEventListener("resize", resize);
+        window.visualViewport?.removeEventListener("resize", resize);
+      },
+      { once: true },
+    );
+
     if (reduceMotion) {
       draw(0);
       return;
     }
 
     const t0 = performance.now();
-    let raf = 0;
     const loop = () => {
       draw((performance.now() - t0) / 1000);
       raf = requestAnimationFrame(loop);
     };
     loop();
-
-    document.addEventListener(
-      "astro:before-swap",
-      () => {
-        cancelAnimationFrame(raf);
-        window.removeEventListener("resize", resize);
-      },
-      { once: true },
-    );
   }
 
   const canvas = document.getElementById("lava-bg") as HTMLCanvasElement | null;
