@@ -1,5 +1,5 @@
 ---
-import { backdropColor, type PaletteName } from "@/styles/palettes";
+import { type PaletteName } from "@/styles/palettes";
 import CTA from "../components/CTA.astro";
 import FAQ from "../components/FAQ.astro";
 import Footer from "../components/Footer.astro";
@@ -19,7 +19,7 @@ const UNDER_CONSTRUCTION = true;
 const CONSTRUCTION_PALETTE: PaletteName = "Ember";
 ---
 
-<BaseLayout noindex={UNDER_CONSTRUCTION} themeColor={UNDER_CONSTRUCTION ? backdropColor(CONSTRUCTION_PALETTE) : undefined}>
+<BaseLayout noindex={UNDER_CONSTRUCTION} themeColor={UNDER_CONSTRUCTION ? "#24182A" : undefined}>
   {
     UNDER_CONSTRUCTION ? (
       <UnderConstruction palette={CONSTRUCTION_PALETTE} />
