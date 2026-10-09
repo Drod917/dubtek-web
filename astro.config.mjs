@@ -2,7 +2,8 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 
-const SITE_URL = "https://www.dubtek.io";
+// GitHub Pages serves the apex domain (www is only a DNS forward), so absolute URLs must use it.
+const SITE_URL = "https://dubtek.io";
 
 export default defineConfig({
   site: SITE_URL,
