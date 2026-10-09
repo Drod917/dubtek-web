@@ -40,6 +40,15 @@ const {
 in vec2 a;
 void main(){ gl_Position = vec4(a, 0.0, 1.0); }`;
 
+  /*
+   * Metaball lava. Notes live here rather than in the GLSL source, since string contents ship verbatim:
+   * - each drop gets a slow, seeded anisotropic stretch and low-order wobble so it reads as deforming wax;
+   *   its gradient is pulled back into screen space through the transpose of that warp
+   * - drops merge through a soft p-norm union so the necks between them fill out as rounded fillets
+   * - color follows depth below the merged surface (~T at the edge, ~1 at a core): the shaded underside
+   *   gets a wide band of the pale ramp stops, the lit top only a hairline
+   * - a near-white bloom hugs the whole perimeter, with a pale haze inside the crown
+   */
   const FRAG = `#version 300 es
 precision highp float;
 out vec4 fragColor;
@@ -86,8 +95,6 @@ void main(){
     if (i >= uCount) break;
     vec2 d = p - uBalls[i].xy;
     float R2 = 4.0 * uBalls[i].z * uBalls[i].z;
-    // each drop gets a slow, seeded anisotropic stretch plus a low-order wobble so it reads
-    // as soft deforming wax rather than a circle
     float sd1 = h21(vec2(float(i) * 1.37, 7.1));
     float sd2 = h21(vec2(float(i) * 2.11, 3.3));
     float ph = sd1 * 6.283 + uTime * (0.06 + 0.05 * sd2);
@@ -106,7 +113,6 @@ void main(){
     ldir += w2 * uLdir[i];
     wsum += w2;
     rw += w2 * uBalls[i].z;
-    // gradient pulled back into screen space through the transpose of the per-drop warp
     vec2 gw = -8.0 * q * q * q * d / R2;
     gw = vec2(gw.x * (1.0 + el), gw.y / (1.0 + el));
     vec2 gws = vec2(gw.x * cos(ax) - gw.y * sin(ax), gw.x * sin(ax) + gw.y * cos(ax));
@@ -117,7 +123,6 @@ void main(){
     spill = max(spill, cq * cq * cq);
   }
 
-  // soft p-norm union so necks between drops fill out as rounded fillets
   f = pow(f, 0.926);
   g /= max(f, 1e-4);
 
@@ -128,15 +133,12 @@ void main(){
   col += ramp(0.30) * min(spill, 1.0) * 0.085 * uGlowInt;
   col += ramp(0.12) * smoothstep(0.06, T, f) * 0.20 * uRim;
 
-  // colour follows depth below the merged surface: ~T at the edge, ~1 at a drop's core
   float s = clamp((f - T) / (0.95 - T), 0.0, 1.0);
   float rAvg = rw / max(wsum, 1e-5);
   float litScale = mix(0.18, 1.0, smoothstep(0.035, 0.14, rAvg));
   vec2 Lv = length(ldir) > 1e-4 ? normalize(ldir) : vec2(-0.6, -0.8);
   float jit = 0.78 + 0.30 * (Lv.x * 0.5 + 0.5);
   float lit = litB / max(wsum, 1e-6);
-  // 0 on the lit top, 1 on the shaded underside: the underside gets a wide band of the pale
-  // stops, the top only a hairline before the core colour takes over
   float undf = smoothstep(0.62, -0.95, lit) * (1.0 - smoothstep(0.55, 0.99, s));
   undf *= mix(0.45, 1.0, litScale) * jit;
   float band = mix(0.045, 0.82, undf);
@@ -147,10 +149,8 @@ void main(){
   vec3 L = normalize(vec3(0.0, -0.72, 0.70));
   float und = smoothstep(0.30, -0.95, lit);
   inner += ramp(0.02) * exp(-abs(f - T) * mix(64.0, 42.0, und)) * mix(0.10, 0.58, und) * uRim * litScale;
-  // near-white perimeter bloom hugging the surface all the way round
   float edg = exp(-abs(f - T) * 46.0);
   inner += vec3(1.0, 0.96, 0.99) * edg * mix(0.62, 0.70, und) * uRim * litScale;
-  // pale haze inside the crown so the top edge reads as a surface curving away
   float crown = (1.0 - smoothstep(0.0, 0.38, s)) * smoothstep(-0.95, 0.30, lit);
   inner += vec3(0.93, 0.90, 1.0) * crown * 0.85 * uRim * litScale;
 

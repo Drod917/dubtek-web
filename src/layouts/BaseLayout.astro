@@ -36,7 +36,7 @@ const jsonLd = {
   url: Astro.site?.toString(),
   image: ogImageURL.toString(),
   areaServed: "Worldwide",
-  sameAs: ["https://www.linkedin.com/company/dubtek", "https://github.com/dubtek-web"],
+  sameAs: ["https://www.linkedin.com/company/dubtek"],
 };
 ---
 
@@ -55,7 +55,6 @@ const jsonLd = {
     <meta name="theme-color" content={themeColor} />
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
@@ -63,17 +62,15 @@ const jsonLd = {
     <meta property="og:image" content={ogImageURL} />
     <meta property="og:site_name" content="Dubtek" />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500&family=Silkscreen&family=VT323&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Silkscreen&family=VT323&display=swap"
       rel="stylesheet"
     />
 
