@@ -57,8 +57,8 @@ yarn preview
 
 1. **Business details** — company name, tagline, and copy live in
    `src/components/*.astro`. Search for "Dubtek" to find every mention.
-2. **Domain** — set your real production URL in `astro.config.mjs` (`SITE_URL`) and
-   in the `LocalBusiness` JSON-LD block in `src/layouts/BaseLayout.astro`.
+2. **Domain** — the production URL is `SITE_URL` in `astro.config.mjs`; canonical, social,
+   JSON-LD, and sitemap URLs derive from it. Also update the sitemap line in `public/robots.txt`.
 3. **Social preview image** — `public/images/og-cover.png` (1200×630) is rendered from
    the lava hero; replace it with a final brand export when you have one.
 4. **Favicon** — swap `public/favicon/favicon.svg` for your own mark.
