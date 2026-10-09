@@ -4,11 +4,7 @@
 
 @layer base {
   :root {
-    color-scheme: light;
-  }
-
-  * {
-    @apply border-surface-border;
+    color-scheme: dark;
   }
 
   html {
@@ -17,21 +13,16 @@
   }
 
   body {
-    @apply bg-surface text-ink font-body antialiased;
-    font-feature-settings: "cv11", "ss01";
+    @apply font-terminal text-white antialiased;
     overscroll-behavior-y: none;
   }
 
-  h1, h2, h3, h4 {
-    @apply font-display text-ink;
-  }
-
   ::selection {
-    @apply bg-accent-500/20 text-ink;
+    @apply bg-aqua text-ink;
   }
 
   :focus-visible {
-    outline: 2px solid #5B5FEE;
+    outline: 2px solid theme("colors.aqua.DEFAULT");
     outline-offset: 3px;
     border-radius: 4px;
   }

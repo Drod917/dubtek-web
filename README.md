@@ -1,103 +1,41 @@
-# Dubtek — Marketing Site
+# dubtek.io
 
-A static, single-page marketing site for a mobile app development studio, built with
-Astro + Tailwind CSS. No backend, no CMS, no client-side framework — just fast,
-semantic HTML shipped as static files.
+Source for [dubtek.io](https://dubtek.io), the Dubtek studio site. Built with Astro and Tailwind, deployed to GitHub Pages.
 
-## Stack
+## Develop
 
-- [Astro](https://astro.build) (SSG, `output: "static"`)
-- Tailwind CSS (via `@astrojs/tailwind`)
-- TypeScript
-- `@astrojs/sitemap` for automatic sitemap generation
-
-## Project structure
-
-```
-src/
-  components/       Landing (the hero) and LavaBackground (WebGL canvas)
-  layouts/
-    BaseLayout.astro   <head>, SEO tags, JSON-LD
-  pages/
-    index.astro        Homepage — the Landing lava hero
-    404.astro          Not-found page — Landing with 404 copy
-  styles/
-    global.css          Tailwind layers + shared classes (.wrap, .btn, .btn-aqua)
-public/
-  favicon.ico          Tab icon (16/32/48px) — white D on a lava-purple tile
-  apple-touch-icon.png iOS home-screen / bookmark icon (180×180)
-  favicon/icon-192.png High-res icon for Android and pinned tabs
-  images/og-cover.png   Social share image (1200×630, rendered from the lava hero)
-  icons/
-  robots.txt
-```
-
-## Run locally
-
-Requires Node.js 18.17+ (20 LTS recommended).
+Needs Node 18.17 or newer.
 
 ```bash
 yarn install
-yarn dev
+yarn dev       # http://localhost:4321
+yarn build     # static output in dist/
+yarn preview   # serve dist/ locally
 ```
 
-The site will be available at `http://localhost:4321`.
+## Layout
 
-## Build for production
-
-```bash
-yarn build
+```
+src/
+  components/
+    Landing.astro          hero: logo, status bar, terminal lines, button
+    LavaBackground.astro   WebGL lava canvas
+  layouts/BaseLayout.astro head tags, structured data, fonts
+  pages/
+    index.astro
+    404.astro              Landing without the logo, with 404 copy
+  styles/
+    global.css
+    palettes.ts            lava palettes, SITE_LAVA, edge colors for theme-color
+public/
+  favicon.ico, apple-touch-icon.png, favicon/icon-192.png
+  images/og-cover.png      1200×630 share image
+  robots.txt
 ```
 
-Static output is written to `dist/`. Preview it locally with:
+## Notes
 
-```bash
-yarn preview
-```
-
-## Before you deploy — replace these placeholders
-
-1. **Business details** — company name, tagline, and copy live in
-   `src/components/*.astro`. Search for "Dubtek" to find every mention.
-2. **Domain** — the production URL is `SITE_URL` in `astro.config.mjs`; canonical, social,
-   JSON-LD, and sitemap URLs derive from it. Also update the sitemap line in `public/robots.txt`.
-3. **Social preview image** — `public/images/og-cover.png` (1200×630) is rendered from
-   the lava hero; replace it with a final brand export when you have one.
-4. **Favicon** — generated from `src/assets/images/dubtek_D_white.png`; regenerate the
-   three icon files if the mark changes.
-5. **Contact details** — the Contact button email is in `src/components/Landing.astro`.
-
-## Deploying
-
-The site builds to plain static files (`dist/`), so any static host works.
-
-### Netlify
-
-- Build command: `yarn build`
-- Publish directory: `dist`
-- (Optional) add a `netlify.toml` with the same values if you prefer config-as-code.
-
-### Vercel
-
-- Framework preset: **Astro** (auto-detected)
-- Build command: `yarn build`
-- Output directory: `dist`
-
-### Cloudflare Pages
-
-- Build command: `yarn build`
-- Build output directory: `dist`
-
-### GitHub Pages
-
-- Set `site` (and `base` if deploying to a project page, e.g.
-  `https://username.github.io/repo-name`) in `astro.config.mjs`.
-- Build with `yarn build` and publish the `dist/` folder via GitHub Actions or
-  the `gh-pages` branch.
-
-## Performance notes
-
-- No client-side JavaScript framework is used — the only script is the WebGL lava
-  background.
-- Fonts are loaded from Google Fonts with `preconnect` + `font-display: swap`.
-- `prefers-reduced-motion` is respected globally.
+- The domain is `SITE_URL` in `astro.config.mjs`. Canonical, social, structured-data, and sitemap URLs come from it; the sitemap line in `public/robots.txt` is hardcoded.
+- The contact address is in `src/components/Landing.astro`.
+- Favicons are generated from `src/assets/images/dubtek_D_white.png` on a `#5b3fd6` tile.
+- Every push to `main` builds and deploys via `.github/workflows/deploy.yml`.

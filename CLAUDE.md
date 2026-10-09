@@ -8,7 +8,7 @@ A static, single-page marketing site for Dubtek (a mobile app development studio
 
 ## Commands
 
-Package manager is **yarn** (see `.github/workflows/deploy.yml` and the `npm -> yarn` migration commit) even though `README.md` still shows `npm` examples — use `yarn` for actual work.
+Package manager is **yarn** (see `.github/workflows/deploy.yml`).
 
 ```bash
 yarn install
@@ -25,9 +25,9 @@ There is no lint, format, or test tooling configured in this repo.
 - `src/layouts/BaseLayout.astro` owns everything in `<head>`: SEO meta tags, Open Graph/Twitter cards, the `Organization` JSON-LD block, Google Fonts loading, and imports `src/styles/global.css`.
 - Each file in `src/components/` is self-contained (`.astro`) with its own markup and Tailwind styling; data flows only through props and slots.
 - `src/styles/global.css` defines Tailwind layers plus reusable component classes: `.wrap` (content max-width container) and `.btn` (shared button mechanics: centering, transition, hover lift) with its `.btn-aqua` variant (the pixel-type aqua CTA). Build new buttons on `.btn` rather than re-declaring those utilities.
-- `tailwind.config.mjs` defines the design tokens: `ink`/`surface`/`accent`/`aqua` colors, `display`/`body`/`mono`/`pixel`/`terminal` font families (Manrope/Inter/JetBrains Mono/Silkscreen/VT323), plus the `content` max width. Use these tokens rather than raw hex values or arbitrary Tailwind sizes.
+- `tailwind.config.mjs` defines the design tokens: `ink` and `aqua` (`aqua-50` for terminal copy) colors, `pixel`/`terminal` font families (Silkscreen/VT323, the only Google Fonts loaded), plus the `content` max width. Use these tokens rather than raw hex values or arbitrary Tailwind sizes.
 - Path aliases (`tsconfig.json`): `@/*` → `src/*`, `@components/*` → `src/components/*`, `@layouts/*` → `src/layouts/*`.
-- No client JS framework is used anywhere — the only client script is the lava WebGL canvas, an inline `<script>` in `LavaBackground.astro`.
+- No client JS framework is used anywhere — the only client script is the lava WebGL canvas, an inline `<script>` in `LavaBackground.astro`. Keep comments out of its GLSL template strings: string contents ship verbatim in the bundle, so shader notes belong in the JS comment above `FRAG`.
 
 ## Content and placeholders
 

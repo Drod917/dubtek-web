@@ -147,3 +147,6 @@ testng-results.xml
 
 # macOS Finder metadata
 .DS_Store
+
+# Astro-generated types and settings
+.astro/
