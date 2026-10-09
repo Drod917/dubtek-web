@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#14161A"/>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#4640DE" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#14161A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <circle cx="120" cy="100" r="18" fill="#5B5FEE"/>
+  <text x="160" y="112" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF">Dubtek</text>
+  <text x="120" y="300" font-family="Arial, sans-serif" font-size="64" font-weight="800" fill="#FFFFFF">Beautiful mobile apps,</text>
+  <text x="120" y="380" font-family="Arial, sans-serif" font-size="64" font-weight="800" fill="#7C7FF2">built for growth.</text>
+  <text x="120" y="450" font-family="Arial, sans-serif" font-size="26" fill="#8A90A0">iOS &#8226; Android &#8226; Flutter &#8226; React Native</text>
+</svg>

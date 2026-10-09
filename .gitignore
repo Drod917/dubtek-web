@@ -88,7 +88,6 @@ yarn-error.log*
 /.changelog
 lib/
 out/
-public/
 spec-reports
 template/src/__tests__/__snapshots__/
 
