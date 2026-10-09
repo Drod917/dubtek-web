@@ -21,22 +21,21 @@ There is no lint, format, or test tooling configured in this repo.
 
 ## Architecture
 
-- `src/pages/index.astro` is the entire site: it imports `BaseLayout` and every section component from `src/components/` and assembles them in order (Navbar, Hero, TrustedBy, Services, WhyChooseUs, Process, Projects, Testimonials, FAQ, CTA, Footer). To reorder or add a section, edit this file.
-- `src/layouts/BaseLayout.astro` owns everything in `<head>`: SEO meta tags, Open Graph/Twitter cards, the `LocalBusiness` JSON-LD block, Google Fonts loading, and imports `src/styles/global.css`. It also contains the one piece of global client-side JS: an `IntersectionObserver` that adds `.is-visible` to any `.reveal` element as it scrolls into view (used for scroll-reveal animations across sections).
-- Each file in `src/components/` is a self-contained section (`.astro`) with its own markup and scoped styling via Tailwind classes — there is no shared component state or props flowing between sections.
-- `src/styles/global.css` defines Tailwind layers plus reusable component classes: `.wrap` (content max-width container), `.section-pad`, `.btn`/`.btn-primary`/`.btn-secondary`/`.btn-ghost`, `.card`/`.card-hover`, `.eyebrow`, and `.reveal`/`.reveal.is-visible` (paired with the `IntersectionObserver` in `BaseLayout.astro`). Prefer these over ad-hoc utility combos when styling new sections.
-- `tailwind.config.mjs` defines the design tokens: `ink`/`surface`/`accent`/`emerald` color scales, `display`/`body`/`mono` font families (Manrope/Inter/JetBrains Mono), custom `display-xl/lg/md` font sizes, and custom shadows (`soft`, `card`, `lift`, `glow`). Use these tokens rather than raw hex values or arbitrary Tailwind sizes.
+- `src/pages/index.astro` and `src/pages/404.astro` both render `BaseLayout` around `Landing.astro`, the full-screen lava hero (logo, status bar, terminal lines, aqua button over `LavaBackground.astro`). The homepage uses Landing's defaults; the 404 page passes its own `lines`, `cta`, and an `info` slot for the status bar text. The shared palette/lift live in `SITE_LAVA` in `src/styles/palettes.ts`, and `BaseLayout` derives the browser chrome colors (theme-color, html/body backdrop) from them via `lavaEdgeColors()`.
+- `src/layouts/BaseLayout.astro` owns everything in `<head>`: SEO meta tags, Open Graph/Twitter cards, the `LocalBusiness` JSON-LD block, Google Fonts loading, and imports `src/styles/global.css`.
+- Each file in `src/components/` is self-contained (`.astro`) with its own markup and Tailwind styling; data flows only through props and slots.
+- `src/styles/global.css` defines Tailwind layers plus reusable component classes: `.wrap` (content max-width container) and `.btn` (shared button mechanics: centering, transition, hover lift) with its `.btn-aqua` variant (the pixel-type aqua CTA). Build new buttons on `.btn` rather than re-declaring those utilities.
+- `tailwind.config.mjs` defines the design tokens: `ink`/`surface`/`accent`/`aqua` colors, `display`/`body`/`mono`/`pixel`/`terminal` font families (Manrope/Inter/JetBrains Mono/Silkscreen/VT323), plus the `content` max width. Use these tokens rather than raw hex values or arbitrary Tailwind sizes.
 - Path aliases (`tsconfig.json`): `@/*` → `src/*`, `@components/*` → `src/components/*`, `@layouts/*` → `src/layouts/*`.
-- No client JS framework is used anywhere — interactive bits (FAQ disclosure, mobile nav) rely on native HTML (`<details>/<summary>`) or small inline `<script>` blocks in the relevant `.astro` component, kept intentionally tiny.
+- No client JS framework is used anywhere — the only client script is the lava WebGL canvas, an inline `<script>` in `LavaBackground.astro`.
 
 ## Content and placeholders
 
 This started as a templated marketing site; several placeholders may still need real content when working on copy/branding tasks:
 - Business details/copy live inline in `src/components/*.astro` (search for "Dubtek").
 - Production domain is set via `SITE_URL` in `astro.config.mjs` and mirrored in the `LocalBusiness` JSON-LD in `BaseLayout.astro`.
-- `public/images/og-cover.svg` is a placeholder OG image; `public/favicon/favicon.svg` is a placeholder favicon.
-- Contact/social links live in `src/components/CTA.astro` and `src/components/Footer.astro`.
-- `src/components/Projects.astro` case studies use CSS-gradient placeholders in place of real app screenshots.
+- `public/images/og-cover.png` (1200×630) is a stand-in OG image rendered from the lava hero; `public/favicon/favicon.svg` is a placeholder favicon.
+- The Contact button's email lives in `src/components/Landing.astro`.
 
 ## Deployment
 

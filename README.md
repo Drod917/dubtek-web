@@ -15,17 +15,17 @@ semantic HTML shipped as static files.
 
 ```
 src/
-  components/       Section components (Hero, Services, Process, FAQ, ...)
+  components/       Landing (the hero) and LavaBackground (WebGL canvas)
   layouts/
-    BaseLayout.astro   <head>, SEO tags, JSON-LD, global scroll-reveal script
+    BaseLayout.astro   <head>, SEO tags, JSON-LD
   pages/
-    index.astro        Homepage — assembles all sections
-    404.astro
+    index.astro        Homepage — the Landing lava hero
+    404.astro          Not-found page — Landing with 404 copy
   styles/
-    global.css          Tailwind layers + reusable component classes (.btn, .card, ...)
+    global.css          Tailwind layers + shared classes (.wrap, .btn, .btn-aqua)
 public/
   favicon/favicon.svg
-  images/og-cover.svg   Placeholder social share image — swap for your own
+  images/og-cover.png   Social share image (1200×630, rendered from the lava hero)
   icons/
   robots.txt
 ```
@@ -59,15 +59,10 @@ yarn preview
    `src/components/*.astro`. Search for "Dubtek" to find every mention.
 2. **Domain** — set your real production URL in `astro.config.mjs` (`SITE_URL`) and
    in the `LocalBusiness` JSON-LD block in `src/layouts/BaseLayout.astro`.
-3. **Social preview image** — replace `public/images/og-cover.svg` with a real
-   1200×630 PNG/JPG export of your brand, and update the `image` prop default in
-   `BaseLayout.astro`.
+3. **Social preview image** — `public/images/og-cover.png` (1200×630) is rendered from
+   the lava hero; replace it with a final brand export when you have one.
 4. **Favicon** — swap `public/favicon/favicon.svg` for your own mark.
-5. **Contact details** — email address and social links are in
-   `src/components/CTA.astro` and `src/components/Footer.astro`.
-6. **Screenshots** — the case studies in `src/components/Projects.astro` use CSS
-   gradients as screenshot placeholders; replace the placeholder `<div>` with real
-   `<img>` / `<Image>` app screenshots when you have them.
+5. **Contact details** — the Contact button email is in `src/components/Landing.astro`.
 
 ## Deploying
 
@@ -99,10 +94,7 @@ The site builds to plain static files (`dist/`), so any static host works.
 
 ## Performance notes
 
-- No client-side JavaScript framework is used — the only scripts are the mobile
-  nav-scroll effect and a small `IntersectionObserver` for scroll-reveal
-  animations, both under a kilobyte.
+- No client-side JavaScript framework is used — the only script is the WebGL lava
+  background.
 - Fonts are loaded from Google Fonts with `preconnect` + `font-display: swap`.
 - `prefers-reduced-motion` is respected globally.
-- All interactive disclosure (FAQ) uses native `<details>/<summary>` — no JS
-  required, fully keyboard and screen-reader accessible.

@@ -1,6 +1,6 @@
 ---
+import { lavaEdgeColors, SITE_LAVA } from "@/styles/palettes";
 import "../styles/global.css";
-import tailwindConfig from "../../tailwind.config.mjs";
 
 export interface Props {
   title?: string;
@@ -8,17 +8,21 @@ export interface Props {
   image?: string;
   noindex?: boolean;
   themeColor?: string;
+  /** html/body backdrop, for when the page's bottom edge differs from the status-bar color. */
+  backgroundColor?: string;
 }
 
-// Keep the html/body backdrop tied to the design token rather than a second hardcoded white.
-const SURFACE = tailwindConfig.theme.extend.colors.surface.DEFAULT;
+// Every page sits on the lava, so the browser chrome matches its edges by default: near-black up top for the
+// status bar, charcoal at the floor for the html/body backdrop behind Safari's bottom toolbar.
+const lavaEdges = lavaEdgeColors(SITE_LAVA.palette, SITE_LAVA.lift);
 
 const {
   title = "Dubtek - Software Development",
   description = "Dubtek designs and builds iOS, Android, Flutter, and React Native apps for startups and growing companies. From first sketch to App Store launch.",
-  image = "/images/og-cover.svg",
+  image = "/images/og-cover.png",
   noindex = false,
-  themeColor = SURFACE,
+  themeColor = lavaEdges.top,
+  backgroundColor = lavaEdges.bottom,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -45,7 +49,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="en" style={`background-color: ${themeColor}`}>
+<html lang="en" style={`background-color: ${backgroundColor}`}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -75,29 +79,13 @@ const jsonLd = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500&family=Silkscreen&family=VT323&display=swap"
       rel="stylesheet"
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body style={`background-color: ${themeColor}`}>
+  <body style={`background-color: ${backgroundColor}`}>
     <slot />
-
-    <script>
-      const revealEls = document.querySelectorAll(".reveal");
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              io.unobserve(entry.target);
-            }
-          }
-        },
-        { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
-      );
-      revealEls.forEach((el) => io.observe(el));
-    </script>
   </body>
 </html>

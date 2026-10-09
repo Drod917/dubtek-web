@@ -1,44 +1,8 @@
 ---
-import { type PaletteName } from "@/styles/palettes";
-import CTA from "../components/CTA.astro";
-import FAQ from "../components/FAQ.astro";
-import Footer from "../components/Footer.astro";
-import Hero from "../components/Hero.astro";
-import Navbar from "../components/Navbar.astro";
-import Process from "../components/Process.astro";
-import Projects from "../components/Projects.astro";
-import Services from "../components/Services.astro";
-import Testimonials from "../components/Testimonials.astro";
-import TrustedBy from "../components/TrustedBy.astro";
-import UnderConstruction from "../components/UnderConstruction.astro";
-import WhyChooseUs from "../components/WhyChooseUs.astro";
+import Landing from "../components/Landing.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-// Site isn't ready for public release yet. Flip to `false` to restore the full homepage.
-const UNDER_CONSTRUCTION = true;
-const CONSTRUCTION_PALETTE: PaletteName = "Ember";
 ---
 
-<BaseLayout noindex={UNDER_CONSTRUCTION} themeColor={UNDER_CONSTRUCTION ? "#24182A" : undefined}>
-  {
-    UNDER_CONSTRUCTION ? (
-      <UnderConstruction palette={CONSTRUCTION_PALETTE} />
-    ) : (
-      <>
-        <Navbar />
-        <main>
-          <Hero />
-          <TrustedBy />
-          <Services />
-          <WhyChooseUs />
-          <Process />
-          <Projects />
-          <Testimonials />
-          <FAQ />
-          <CTA />
-        </main>
-        <Footer />
-      </>
-    )
-  }
+<BaseLayout>
+  <Landing />
 </BaseLayout>
