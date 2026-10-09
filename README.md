@@ -24,7 +24,9 @@ src/
   styles/
     global.css          Tailwind layers + shared classes (.wrap, .btn, .btn-aqua)
 public/
-  favicon/favicon.svg
+  favicon.ico          Tab icon (16/32/48px) — white D on a lava-purple tile
+  apple-touch-icon.png iOS home-screen / bookmark icon (180×180)
+  favicon/icon-192.png High-res icon for Android and pinned tabs
   images/og-cover.png   Social share image (1200×630, rendered from the lava hero)
   icons/
   robots.txt
@@ -61,7 +63,8 @@ yarn preview
    in the `LocalBusiness` JSON-LD block in `src/layouts/BaseLayout.astro`.
 3. **Social preview image** — `public/images/og-cover.png` (1200×630) is rendered from
    the lava hero; replace it with a final brand export when you have one.
-4. **Favicon** — swap `public/favicon/favicon.svg` for your own mark.
+4. **Favicon** — generated from `src/assets/images/dubtek_D_white.png`; regenerate the
+   three icon files if the mark changes.
 5. **Contact details** — the Contact button email is in `src/components/Landing.astro`.
 
 ## Deploying

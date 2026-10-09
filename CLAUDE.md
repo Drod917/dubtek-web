@@ -34,7 +34,7 @@ There is no lint, format, or test tooling configured in this repo.
 This started as a templated marketing site; several placeholders may still need real content when working on copy/branding tasks:
 - Business details/copy live inline in `src/components/*.astro` (search for "Dubtek").
 - Production domain is set via `SITE_URL` in `astro.config.mjs` and mirrored in the `LocalBusiness` JSON-LD in `BaseLayout.astro`.
-- `public/images/og-cover.png` (1200×630) is a stand-in OG image rendered from the lava hero; `public/favicon/favicon.svg` is a placeholder favicon.
+- `public/images/og-cover.png` (1200×630) is a stand-in OG image rendered from the lava hero. Favicons (`public/favicon.ico` with 16/32/48px, `public/favicon/icon-192.png`, `public/apple-touch-icon.png`) are the white D from `src/assets/images/dubtek_D_white.png` on a lava-purple (`#5b3fd6`) tile; regenerate them from that source if the mark changes.
 - The Contact button's email lives in `src/components/Landing.astro`.
 
 ## Deployment
