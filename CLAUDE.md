@@ -21,11 +21,11 @@ There is no lint, format, or test tooling configured in this repo.
 
 ## Architecture
 
-- `src/pages/index.astro` is the entire site: it renders `BaseLayout` around `Landing.astro`, the full-screen lava hero (logo, status bar, terminal lines, Contact button over `LavaBackground.astro`). It also sets the palette/lift and derives the browser chrome colors from them via `lavaEdgeColors()` in `src/styles/palettes.ts`. `src/pages/404.astro` is a standalone not-found message.
+- `src/pages/index.astro` and `src/pages/404.astro` both render `BaseLayout` around `Landing.astro`, the full-screen lava hero (logo, status bar, terminal lines, aqua button over `LavaBackground.astro`). The homepage uses Landing's defaults; the 404 page passes its own `lines`, `cta`, and an `info` slot for the status bar text. The shared palette/lift live in `SITE_LAVA` in `src/styles/palettes.ts`, and `BaseLayout` derives the browser chrome colors (theme-color, html/body backdrop) from them via `lavaEdgeColors()`.
 - `src/layouts/BaseLayout.astro` owns everything in `<head>`: SEO meta tags, Open Graph/Twitter cards, the `LocalBusiness` JSON-LD block, Google Fonts loading, and imports `src/styles/global.css`.
-- Each file in `src/components/` is self-contained (`.astro`) with its own markup and Tailwind styling; data flows only through props (e.g. palette and lift from `index.astro` into `Landing` and `LavaBackground`).
-- `src/styles/global.css` defines Tailwind layers plus reusable component classes: `.wrap` (content max-width container), `.btn`/`.btn-primary`, and `.eyebrow`. Prefer these over ad-hoc utility combos.
-- `tailwind.config.mjs` defines the design tokens: `ink`/`surface`/`accent`/`aqua` colors, `display`/`body`/`mono`/`pixel`/`terminal` font families (Manrope/Inter/JetBrains Mono/Silkscreen/VT323), a `display-lg` font size, and custom shadows (`soft`, `lift`). Use these tokens rather than raw hex values or arbitrary Tailwind sizes.
+- Each file in `src/components/` is self-contained (`.astro`) with its own markup and Tailwind styling; data flows only through props and slots.
+- `src/styles/global.css` defines Tailwind layers plus the `.wrap` content max-width container class.
+- `tailwind.config.mjs` defines the design tokens: `ink`/`surface`/`accent`/`aqua` colors, `display`/`body`/`mono`/`pixel`/`terminal` font families (Manrope/Inter/JetBrains Mono/Silkscreen/VT323), plus the `content` max width. Use these tokens rather than raw hex values or arbitrary Tailwind sizes.
 - Path aliases (`tsconfig.json`): `@/*` → `src/*`, `@components/*` → `src/components/*`, `@layouts/*` → `src/layouts/*`.
 - No client JS framework is used anywhere — the only client script is the lava WebGL canvas, an inline `<script>` in `LavaBackground.astro`.
 

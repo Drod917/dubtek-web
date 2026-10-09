@@ -1,14 +1,8 @@
 ---
-import { lavaEdgeColors, type PaletteName } from "@/styles/palettes";
 import Landing from "../components/Landing.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const LANDING_PALETTE: PaletteName = "Medal";
-const LANDING_LIFT = 0.6;
-// Browser chrome and page backdrops match the lava's own edges: near-black up top, charcoal at the floor.
-const lavaEdges = lavaEdgeColors(LANDING_PALETTE, LANDING_LIFT);
 ---
 
-<BaseLayout themeColor={lavaEdges.top} backgroundColor={lavaEdges.bottom}>
-  <Landing palette={LANDING_PALETTE} lift={LANDING_LIFT} />
+<BaseLayout>
+  <Landing />
 </BaseLayout>

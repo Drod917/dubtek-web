@@ -35,15 +35,8 @@ export default {
         pixel: ["Silkscreen", "ui-monospace", "monospace"], // wide pixel caps for system labels
         terminal: ["VT323", "ui-monospace", "monospace"], // narrow CRT terminal type
       },
-      fontSize: {
-        "display-lg": ["clamp(2.25rem, 4.2vw, 3.5rem)", { lineHeight: "1.05", letterSpacing: "-0.025em" }],
-      },
       maxWidth: {
         content: "1240px",
-      },
-      boxShadow: {
-        soft: "0 1px 2px rgba(20,22,26,0.04), 0 8px 24px -8px rgba(20,22,26,0.08)",
-        lift: "0 20px 48px -16px rgba(70,64,222,0.28)",
       },
     },
   },

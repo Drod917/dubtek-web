@@ -1,14 +1,14 @@
 ---
+import Landing from "../components/Landing.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Page not found — Dubtek">
-  <main class="wrap flex min-h-dvh flex-col items-center justify-center py-24 text-center">
-    <span class="eyebrow">404</span>
-    <h1 class="mt-4 text-display-lg font-display font-bold">This screen doesn't exist yet.</h1>
-    <p class="mt-4 max-w-md text-lg text-ink-soft">
-      The page you're looking for was moved, renamed, or never built. Let's get you back on track.
-    </p>
-    <a href="/" class="btn-primary mt-8">Back to homepage</a>
-  </main>
+<BaseLayout title="Page not found — Dubtek" noindex>
+  <Landing
+    lines={["Dubtek: this page drifted out of our universe.", "Dubtek: let's get you back home."]}
+    cta={{ href: "/", label: "Go home" }}
+    logo={false}
+  >
+    <Fragment slot="info">Error 404: page not found</Fragment>
+  </Landing>
 </BaseLayout>

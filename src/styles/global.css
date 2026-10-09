@@ -50,17 +50,4 @@
   .wrap {
     @apply mx-auto w-full max-w-content px-6 sm:px-8 lg:px-10;
   }
-
-  .eyebrow {
-    @apply inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent-600;
-  }
-
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-medium transition-all duration-300 ease-out;
-  }
-
-  .btn-primary {
-    @apply btn bg-ink text-white shadow-soft hover:-translate-y-0.5 hover:shadow-lift active:translate-y-0;
-    background-image: linear-gradient(135deg, #4640DE 0%, #5B5FEE 55%, #7C7FF2 100%);
-  }
 }

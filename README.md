@@ -20,9 +20,9 @@ src/
     BaseLayout.astro   <head>, SEO tags, JSON-LD
   pages/
     index.astro        Homepage — the Landing lava hero
-    404.astro
+    404.astro          Not-found page — Landing with 404 copy
   styles/
-    global.css          Tailwind layers + reusable component classes (.wrap, .btn, ...)
+    global.css          Tailwind layers + the .wrap container class
 public/
   favicon/favicon.svg
   images/og-cover.svg   Placeholder social share image — swap for your own

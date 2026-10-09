@@ -1,5 +1,8 @@
 export type PaletteName = "Ember" | "Magenta" | "Ultraviolet" | "Iridescent" | "Medal";
 
+/** The lava look every page shares, so the canvas and the browser chrome colors derived from it agree. */
+export const SITE_LAVA: { palette: PaletteName; lift: number } = { palette: "Medal", lift: 0.6 };
+
 export const PALETTES: Record<PaletteName, { stops: string[]; bg: string[] }> = {
   Ember: { stops: ["ffe9a3", "ffb020", "ff3a2e", "d0186a", "4a2fd0", "0b1550"], bg: ["05081c", "010207"] },
   Magenta: { stops: ["ffe2ec", "ff5fa8", "ff1f5e", "c01050", "6a0a3a", "2a0518"], bg: ["1d0310", "080105"] },

@@ -1,6 +1,6 @@
 ---
+import { lavaEdgeColors, SITE_LAVA } from "@/styles/palettes";
 import "../styles/global.css";
-import tailwindConfig from "../../tailwind.config.mjs";
 
 export interface Props {
   title?: string;
@@ -12,16 +12,17 @@ export interface Props {
   backgroundColor?: string;
 }
 
-// Keep the html/body backdrop tied to the design token rather than a second hardcoded white.
-const SURFACE = tailwindConfig.theme.extend.colors.surface.DEFAULT;
+// Every page sits on the lava, so the browser chrome matches its edges by default: near-black up top for the
+// status bar, charcoal at the floor for the html/body backdrop behind Safari's bottom toolbar.
+const lavaEdges = lavaEdgeColors(SITE_LAVA.palette, SITE_LAVA.lift);
 
 const {
   title = "Dubtek - Software Development",
   description = "Dubtek designs and builds iOS, Android, Flutter, and React Native apps for startups and growing companies. From first sketch to App Store launch.",
   image = "/images/og-cover.svg",
   noindex = false,
-  themeColor = SURFACE,
-  backgroundColor = themeColor,
+  themeColor = lavaEdges.top,
+  backgroundColor = lavaEdges.bottom,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);

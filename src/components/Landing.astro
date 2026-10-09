@@ -1,15 +1,27 @@
 ---
 import websiteLogo from "@/assets/images/website-logo.png";
-import { lavaEdgeColors, type PaletteName } from "@/styles/palettes";
+import { lavaEdgeColors, SITE_LAVA, type PaletteName } from "@/styles/palettes";
 import LavaBackground from "@components/LavaBackground.astro";
 import { Image } from "astro:assets";
 
 export interface Props {
   palette?: PaletteName;
   lift?: number;
+  /** Terminal log lines; earlier ones render dimmed, the last one bright. */
+  lines?: string[];
+  /** The aqua button beside the terminal lines. */
+  cta?: { href: string; label: string };
+  /** Show the Dubtek logo above the status bar; without it the rest of the stack centers on its own. */
+  logo?: boolean;
 }
 
-const { palette = "Medal", lift = 0.6 } = Astro.props;
+const {
+  palette = SITE_LAVA.palette,
+  lift = SITE_LAVA.lift,
+  lines = ["Dubtek: welcome to our universe.", "Dubtek: obsessed with details. Building what's next."],
+  cta = { href: "mailto:admin@dubtek.io", label: "Contact" },
+  logo = true,
+} = Astro.props;
 
 // The status bar and terminal lines sit on moving lava, so lift them off it with a soft dark halo.
 const LEGIBLE = "text-shadow: 0 1px 2px rgba(0,0,0,0.7), 0 0 14px rgba(5,4,12,0.55);";
@@ -30,18 +42,24 @@ const LEGIBLE = "text-shadow: 0 1px 2px rgba(0,0,0,0.7), 0 0 14px rgba(5,4,12,0.
         against this column's width, so they trim that padding at every size: the lettering spans the
         column, the halo overhangs either side, and the status bar tucks just under the glow.
       -->
-      <h1 class="-mx-[12.35%] -mt-[19%] -mb-[18%]">
-        <Image
-          src={websiteLogo}
-          alt="Dubtek"
-          widths={[640, 960, 1280, 1680, 2240]}
-          sizes="(min-width: 976px) 1118px, 125vw"
-          loading="eager"
-          fetchpriority="high"
-          class="h-auto w-full select-none"
-          draggable="false"
-        />
-      </h1>
+      {
+        logo ? (
+          <h1 class="-mx-[12.35%] -mt-[19%] -mb-[18%]">
+            <Image
+              src={websiteLogo}
+              alt="Dubtek"
+              widths={[640, 960, 1280, 1680, 2240]}
+              sizes="(min-width: 976px) 1118px, 125vw"
+              loading="eager"
+              fetchpriority="high"
+              class="h-auto w-full select-none"
+              draggable="false"
+            />
+          </h1>
+        ) : (
+          <h1 class="sr-only">Dubtek</h1>
+        )
+      }
 
       <div
         class="relative grid grid-cols-[auto_1fr_auto] overflow-hidden rounded-lg border border-aqua/55 font-pixel text-[0.625rem] uppercase leading-none tracking-[0.3em] backdrop-blur-sm backdrop-saturate-50 md:grid-cols-[auto_auto_1fr_auto]"
@@ -54,8 +72,10 @@ const LEGIBLE = "text-shadow: 0 1px 2px rgba(0,0,0,0.7), 0 0 14px rgba(5,4,12,0.
           class="col-span-full row-start-2 border-t border-aqua/55 bg-black/40 px-3 py-2 text-center leading-normal text-white/90 md:col-span-1 md:col-start-2 md:row-start-1 md:border-l md:border-t-0 md:leading-none"
           style={LEGIBLE}
         >
-          Product, design &amp;<br class="sm:hidden" />
-          <span class="whitespace-nowrap">software development</span>
+          <slot name="info">
+            Product, design &amp;<br class="sm:hidden" />
+            <span class="whitespace-nowrap">software development</span>
+          </slot>
         </span>
         <span
           class="col-start-2 row-start-1 border-l border-aqua/55 bg-clip-content bg-center bg-no-repeat px-2 md:col-start-3"
@@ -71,21 +91,26 @@ const LEGIBLE = "text-shadow: 0 1px 2px rgba(0,0,0,0.7), 0 0 14px rgba(5,4,12,0.
 
       <div class="mt-7 flex flex-col gap-6 sm:items-start lg:flex-row lg:items-center lg:justify-between lg:gap-10">
         <div class="font-terminal text-[1.375rem] uppercase leading-[1.15] sm:text-[1.5rem] lg:text-[1.7rem]" style={LEGIBLE}>
-          <p class="flex gap-3 text-white/55">
-            <span aria-hidden="true">&gt;</span>
-            <span>Dubtek: welcome to our universe.</span>
-          </p>
-          <p class="flex gap-3 text-aqua-50">
-            <span class="text-aqua" aria-hidden="true">&gt;</span>
-            <span>Dubtek: obsessed with details. Building what's next.</span>
-          </p>
+          {
+            lines.map((line, i) => {
+              const current = i === lines.length - 1;
+              return (
+                <p class:list={["flex gap-3", current ? "text-aqua-50" : "text-white/55"]}>
+                  <span class:list={[current && "text-aqua"]} aria-hidden="true">
+                    &gt;
+                  </span>
+                  <span>{line}</span>
+                </p>
+              );
+            })
+          }
         </div>
 
         <a
-          href="mailto:admin@dubtek.io"
+          href={cta.href}
           class="inline-flex shrink-0 items-center justify-center gap-5 rounded-xl bg-aqua px-8 py-[1.375rem] font-pixel text-lg uppercase leading-none tracking-[0.2em] text-ink transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(162,251,255,0.6),0_12px_40px_-8px_rgba(162,251,255,0.55)] active:translate-y-0"
         >
-          Contact
+          {cta.label}
           <svg class="h-4 w-5" viewBox="0 0 20 16" fill="none" aria-hidden="true">
             <path d="M1 8h16M11 2l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" />
           </svg>
