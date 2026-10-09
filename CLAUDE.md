@@ -22,7 +22,7 @@ There is no lint, format, or test tooling configured in this repo.
 ## Architecture
 
 - `src/pages/index.astro` and `src/pages/404.astro` both render `BaseLayout` around `Landing.astro`, the full-screen lava hero (logo, status bar, terminal lines, aqua button over `LavaBackground.astro`). The homepage uses Landing's defaults; the 404 page passes its own `lines`, `cta`, and an `info` slot for the status bar text. The shared palette/lift live in `SITE_LAVA` in `src/styles/palettes.ts`, and `BaseLayout` derives the browser chrome colors (theme-color, html/body backdrop) from them via `lavaEdgeColors()`.
-- `src/layouts/BaseLayout.astro` owns everything in `<head>`: SEO meta tags, Open Graph/Twitter cards, the `LocalBusiness` JSON-LD block, Google Fonts loading, and imports `src/styles/global.css`.
+- `src/layouts/BaseLayout.astro` owns everything in `<head>`: SEO meta tags, Open Graph/Twitter cards, the `Organization` JSON-LD block, Google Fonts loading, and imports `src/styles/global.css`.
 - Each file in `src/components/` is self-contained (`.astro`) with its own markup and Tailwind styling; data flows only through props and slots.
 - `src/styles/global.css` defines Tailwind layers plus reusable component classes: `.wrap` (content max-width container) and `.btn` (shared button mechanics: centering, transition, hover lift) with its `.btn-aqua` variant (the pixel-type aqua CTA). Build new buttons on `.btn` rather than re-declaring those utilities.
 - `tailwind.config.mjs` defines the design tokens: `ink`/`surface`/`accent`/`aqua` colors, `display`/`body`/`mono`/`pixel`/`terminal` font families (Manrope/Inter/JetBrains Mono/Silkscreen/VT323), plus the `content` max width. Use these tokens rather than raw hex values or arbitrary Tailwind sizes.
@@ -33,7 +33,7 @@ There is no lint, format, or test tooling configured in this repo.
 
 This started as a templated marketing site; several placeholders may still need real content when working on copy/branding tasks:
 - Business details/copy live inline in `src/components/*.astro` (search for "Dubtek").
-- Production domain is set via `SITE_URL` in `astro.config.mjs` and mirrored in the `LocalBusiness` JSON-LD in `BaseLayout.astro`.
+- Production domain is set via `SITE_URL` in `astro.config.mjs` (the apex `https://dubtek.io`, which GitHub Pages serves; `www` redirects to it). Astro exposes it as `Astro.site`, which `BaseLayout` uses for the canonical, `og:`/`twitter:` URLs and JSON-LD, and the sitemap uses for its URLs. `public/robots.txt` hardcodes the sitemap URL, so update it too if the domain changes.
 - `public/images/og-cover.png` (1200×630) is a stand-in OG image rendered from the lava hero. Favicons (`public/favicon.ico` with 16/32/48px, `public/favicon/icon-192.png`, `public/apple-touch-icon.png`) are the white D from `src/assets/images/dubtek_D_white.png` on a lava-purple (`#5b3fd6`) tile; regenerate them from that source if the mark changes.
 - The Contact button's email lives in `src/components/Landing.astro`.
 
