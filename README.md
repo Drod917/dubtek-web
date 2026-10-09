@@ -15,7 +15,7 @@ semantic HTML shipped as static files.
 
 ```
 src/
-  components/       Section components (Hero, Services, Process, FAQ, ...)
+  components/       Landing, LavaBackground, and the 404 page's Navbar/Footer
   layouts/
     BaseLayout.astro   <head>, SEO tags, JSON-LD, global scroll-reveal script
   pages/
@@ -63,11 +63,8 @@ yarn preview
    1200×630 PNG/JPG export of your brand, and update the `image` prop default in
    `BaseLayout.astro`.
 4. **Favicon** — swap `public/favicon/favicon.svg` for your own mark.
-5. **Contact details** — email address and social links are in
-   `src/components/CTA.astro` and `src/components/Footer.astro`.
-6. **Screenshots** — the case studies in `src/components/Projects.astro` use CSS
-   gradients as screenshot placeholders; replace the placeholder `<div>` with real
-   `<img>` / `<Image>` app screenshots when you have them.
+5. **Contact details** — the Contact button email is in `src/components/Landing.astro`;
+   the 404 page's email and social links are in `src/components/Footer.astro`.
 
 ## Deploying
 
@@ -99,10 +96,8 @@ The site builds to plain static files (`dist/`), so any static host works.
 
 ## Performance notes
 
-- No client-side JavaScript framework is used — the only scripts are the mobile
-  nav-scroll effect and a small `IntersectionObserver` for scroll-reveal
-  animations, both under a kilobyte.
+- No client-side JavaScript framework is used — the scripts are the WebGL lava
+  background, the 404 page's nav-scroll effect, and a small scroll-reveal
+  `IntersectionObserver`.
 - Fonts are loaded from Google Fonts with `preconnect` + `font-display: swap`.
 - `prefers-reduced-motion` is respected globally.
-- All interactive disclosure (FAQ) uses native `<details>/<summary>` — no JS
-  required, fully keyboard and screen-reader accessible.
