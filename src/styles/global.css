@@ -50,4 +50,18 @@
   .wrap {
     @apply mx-auto w-full max-w-content px-6 sm:px-8 lg:px-10;
   }
+
+  .btn {
+    @apply inline-flex items-center justify-center transition-all duration-300 ease-out hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-aqua {
+    @apply btn gap-5 rounded-xl bg-aqua px-8 py-[1.375rem] font-pixel text-lg uppercase leading-none tracking-[0.2em] text-ink;
+  }
+
+  .btn-aqua:hover {
+    box-shadow:
+      0 0 0 1px theme("colors.aqua.DEFAULT / 60%"),
+      0 12px 40px -8px theme("colors.aqua.DEFAULT / 55%");
+  }
 }

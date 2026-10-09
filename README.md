@@ -22,7 +22,7 @@ src/
     index.astro        Homepage — the Landing lava hero
     404.astro          Not-found page — Landing with 404 copy
   styles/
-    global.css          Tailwind layers + the .wrap container class
+    global.css          Tailwind layers + shared classes (.wrap, .btn, .btn-aqua)
 public/
   favicon/favicon.svg
   images/og-cover.svg   Placeholder social share image — swap for your own
