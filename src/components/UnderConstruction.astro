@@ -1,5 +1,5 @@
 ---
-import dubtekLogo from "@/assets/images/dubtek-screenprint-shine-logo.png";
+import websiteLogo from "@/assets/images/website-logo.png";
 import { backdropColor, type PaletteName } from "@/styles/palettes";
 import LavaBackground from "@components/LavaBackground.astro";
 import { Image } from "astro:assets";
@@ -8,35 +8,87 @@ export interface Props {
   palette?: PaletteName;
 }
 
-const { palette = "Ember" } = Astro.props;
+const { palette = "Medal" } = Astro.props;
+
+// The status bar and terminal lines sit on moving lava, so lift them off it with a soft dark halo.
+const LEGIBLE = "text-shadow: 0 1px 2px rgba(0,0,0,0.7), 0 0 14px rgba(5,4,12,0.55);";
 ---
 
 <main
-  class="relative flex h-dvh items-center justify-center overflow-hidden"
+  class="relative flex min-h-dvh items-center justify-center overflow-hidden"
   style={`background-color: ${backdropColor(palette)}`}
 >
-  <LavaBackground palette={palette} />
+  <LavaBackground palette={palette} blobCount={8} lift={0.6} shine={0.35} start={68} />
 
   <div
-    class="wrap relative pt-[calc(env(safe-area-inset-top)+2.5rem)] pb-[calc(env(safe-area-inset-bottom)+2.5rem)] text-center sm:pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-[calc(env(safe-area-inset-bottom)+4rem)] md:pt-[calc(env(safe-area-inset-top)+6rem)] md:pb-[calc(env(safe-area-inset-bottom)+6rem)]"
+    class="wrap relative pt-[calc(env(safe-area-inset-top)+2.5rem)] pb-[calc(env(safe-area-inset-bottom)+2.5rem)] sm:pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-[calc(env(safe-area-inset-bottom)+4rem)]"
   >
-    <span
-      class="eyebrow mt-8 justify-center text-white/70"
-      style="text-shadow: 0 1px 1px rgba(0,0,0,0.9), 0 2px 10px rgba(5,2,32,0.85), 0 6px 24px rgba(5,2,32,0.6);"
-      >Under construction. Check back soon!</span
-    >
-    <Image src={dubtekLogo} alt="Dubtek" class="mx-auto mt-4 h-auto w-full max-w-md sm:max-w-lg md:max-w-xl" />
+    <div class="mx-auto max-w-4xl">
+      <!--
+        website-logo.png carries wide transparent margins around its glow. Percentage margins resolve
+        against this column's width, so they trim that padding at every size: the lettering spans the
+        column, the halo overhangs either side, and the status bar tucks just under the glow.
+      -->
+      <h1 class="-mx-[12.35%] -mt-[19%] -mb-[18%]">
+        <Image
+          src={websiteLogo}
+          alt="Dubtek"
+          widths={[640, 960, 1280, 1680, 2240]}
+          sizes="(min-width: 976px) 1118px, 125vw"
+          loading="eager"
+          fetchpriority="high"
+          class="h-auto w-full select-none"
+          draggable="false"
+        />
+      </h1>
 
-    <p
-      class="mx-auto mt-4 max-w-lg text-lg text-white/70"
-      style="text-shadow: 0 1px 1px rgba(0,0,0,0.9), 0 2px 10px rgba(5,2,32,0.85), 0 6px 20px rgba(5,2,32,0.6);"
-    >
-      We build thoughtful digital experiences designed around the people using them. Blending technology, creativity, and
-      intuitive design with an obsessive attention to detail.
-    </p>
+      <div
+        class="relative grid grid-cols-[auto_1fr_auto] overflow-hidden rounded-lg border border-aqua/55 font-pixel text-[0.625rem] uppercase leading-none tracking-[0.3em] backdrop-blur-sm backdrop-saturate-50 md:grid-cols-[auto_auto_1fr_auto]"
+      >
+        <span class="col-start-1 row-start-1 flex items-center gap-2 bg-aqua px-3 py-2 text-ink">
+          <span class="h-1.5 w-1.5 rounded-full bg-ink" aria-hidden="true"></span>
+          Sys.info
+        </span>
+        <span
+          class="col-span-full row-start-2 border-t border-aqua/55 bg-black/40 px-3 py-2 leading-normal text-white/90 md:col-span-1 md:col-start-2 md:row-start-1 md:border-l md:border-t-0 md:leading-none"
+          style={LEGIBLE}
+        >
+          Product, design &amp; software development
+        </span>
+        <span
+          class="col-start-2 row-start-1 border-l border-aqua/55 bg-clip-content bg-center bg-no-repeat px-2 md:col-start-3"
+          style="background-image: repeating-linear-gradient(90deg, rgb(162 251 255 / 0.5) 0 1.5px, transparent 1.5px 5px); background-size: 100% 6px;"
+          aria-hidden="true"></span>
+        <span
+          class="col-start-3 row-start-1 border-l border-aqua/55 bg-black/40 px-3 py-2 text-aqua/75 md:col-start-4"
+          style={LEGIBLE}
+        >
+          Est. 2025
+        </span>
+      </div>
 
-    <!-- <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
-      <a href="mailto:hello@dubtek.io" class="btn-primary">Get in touch</a>
-    </div> -->
+      <div class="mt-7 flex flex-col gap-6 sm:items-start lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+        <div class="font-terminal text-[1.375rem] uppercase leading-[1.15] sm:text-[1.5rem] lg:text-[1.7rem]" style={LEGIBLE}>
+          <p class="flex gap-3 text-white/55">
+            <span aria-hidden="true">&gt;</span>
+            <span>Dubtek: welcome to our universe.</span>
+          </p>
+          <p class="flex gap-3 text-aqua-50">
+            <span class="text-aqua" aria-hidden="true">&gt;</span>
+            <span>Dubtek: obsessed with details. Building what's next.</span>
+          </p>
+        </div>
+
+        <a
+          href="mailto:hello@dubtek.io"
+          class="inline-flex shrink-0 items-center justify-center gap-5 rounded-xl bg-aqua px-8 py-[1.375rem] font-pixel text-lg uppercase leading-none tracking-[0.2em] text-ink transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(162,251,255,0.6),0_12px_40px_-8px_rgba(162,251,255,0.55)] active:translate-y-0"
+        >
+          Contact
+          <svg class="h-4 w-5" viewBox="0 0 20 16" fill="none" aria-hidden="true">
+            <path d="M1 8h16M11 2l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" />
+          </svg>
+        </a>
+      </div>
+    </div>
   </div>
 </main>

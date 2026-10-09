@@ -28,11 +28,17 @@ export default {
           500: "#10B981",
           600: "#059669",
         },
+        aqua: {
+          50: "#E6F6F5", // aqua-tinted white for terminal copy
+          DEFAULT: "#A2FBFF", // lava-rim cyan — hero status bar + contact button
+        },
       },
       fontFamily: {
         display: ["'Manrope Variable'", "Manrope", "sans-serif"],
         body: ["'Inter Variable'", "Inter", "sans-serif"],
         mono: ["'JetBrains Mono'", "ui-monospace", "monospace"],
+        pixel: ["Silkscreen", "ui-monospace", "monospace"], // wide pixel caps for system labels
+        terminal: ["VT323", "ui-monospace", "monospace"], // narrow CRT terminal type
       },
       fontSize: {
         "display-xl": ["clamp(2.75rem, 6vw, 5rem)", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
