@@ -1,5 +1,5 @@
 ---
-import { type PaletteName } from "@/styles/palettes";
+import { lavaEdgeColors, type PaletteName } from "@/styles/palettes";
 import CTA from "../components/CTA.astro";
 import FAQ from "../components/FAQ.astro";
 import Footer from "../components/Footer.astro";
@@ -17,12 +17,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 // Site isn't ready for public release yet. Flip to `false` to restore the full homepage.
 const UNDER_CONSTRUCTION = true;
 const CONSTRUCTION_PALETTE: PaletteName = "Medal";
+const CONSTRUCTION_LIFT = 0.6;
+// Browser chrome and page backdrops match the lava's own edges: near-black up top, charcoal at the floor.
+const lavaEdges = lavaEdgeColors(CONSTRUCTION_PALETTE, CONSTRUCTION_LIFT);
 ---
 
-<BaseLayout noindex={UNDER_CONSTRUCTION} themeColor={UNDER_CONSTRUCTION ? "#24182A" : undefined}>
+<BaseLayout
+  noindex={UNDER_CONSTRUCTION}
+  themeColor={UNDER_CONSTRUCTION ? lavaEdges.top : undefined}
+  backgroundColor={UNDER_CONSTRUCTION ? lavaEdges.bottom : undefined}
+>
   {
     UNDER_CONSTRUCTION ? (
-      <UnderConstruction palette={CONSTRUCTION_PALETTE} />
+      <UnderConstruction palette={CONSTRUCTION_PALETTE} lift={CONSTRUCTION_LIFT} />
     ) : (
       <>
         <Navbar />

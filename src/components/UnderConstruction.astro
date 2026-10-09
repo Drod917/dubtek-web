@@ -1,14 +1,15 @@
 ---
 import websiteLogo from "@/assets/images/website-logo.png";
-import { backdropColor, type PaletteName } from "@/styles/palettes";
+import { lavaEdgeColors, type PaletteName } from "@/styles/palettes";
 import LavaBackground from "@components/LavaBackground.astro";
 import { Image } from "astro:assets";
 
 export interface Props {
   palette?: PaletteName;
+  lift?: number;
 }
 
-const { palette = "Medal" } = Astro.props;
+const { palette = "Medal", lift = 0.6 } = Astro.props;
 
 // The status bar and terminal lines sit on moving lava, so lift them off it with a soft dark halo.
 const LEGIBLE = "text-shadow: 0 1px 2px rgba(0,0,0,0.7), 0 0 14px rgba(5,4,12,0.55);";
@@ -16,9 +17,9 @@ const LEGIBLE = "text-shadow: 0 1px 2px rgba(0,0,0,0.7), 0 0 14px rgba(5,4,12,0.
 
 <main
   class="relative flex min-h-dvh items-center justify-center overflow-hidden"
-  style={`background-color: ${backdropColor(palette)}`}
+  style={`background-color: ${lavaEdgeColors(palette, lift).bottom}`}
 >
-  <LavaBackground palette={palette} blobCount={8} lift={0.6} shine={0.1} start={68} />
+  <LavaBackground palette={palette} blobCount={8} lift={lift} shine={0.1} start={68} />
 
   <div
     class="wrap relative pt-[calc(env(safe-area-inset-top)+2.5rem)] pb-[calc(env(safe-area-inset-bottom)+2.5rem)] sm:pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-[calc(env(safe-area-inset-bottom)+4rem)]"

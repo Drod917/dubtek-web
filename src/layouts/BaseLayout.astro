@@ -8,6 +8,8 @@ export interface Props {
   image?: string;
   noindex?: boolean;
   themeColor?: string;
+  /** html/body backdrop, for when the page's bottom edge differs from the status-bar color. */
+  backgroundColor?: string;
 }
 
 // Keep the html/body backdrop tied to the design token rather than a second hardcoded white.
@@ -19,6 +21,7 @@ const {
   image = "/images/og-cover.svg",
   noindex = false,
   themeColor = SURFACE,
+  backgroundColor = themeColor,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -45,7 +48,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="en" style={`background-color: ${themeColor}`}>
+<html lang="en" style={`background-color: ${backgroundColor}`}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -81,7 +84,7 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body style={`background-color: ${themeColor}`}>
+  <body style={`background-color: ${backgroundColor}`}>
     <slot />
 
     <script>
