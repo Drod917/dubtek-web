@@ -30,12 +30,11 @@ const ogImageURL = new URL(image, Astro.site);
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "Organization",
   name: "Dubtek",
   description: "Product, design, and software development studio obsessed with the details.",
   url: Astro.site?.toString(),
   image: ogImageURL.toString(),
-  priceRange: "$$",
   areaServed: "Worldwide",
   sameAs: ["https://www.linkedin.com/company/dubtek", "https://github.com/dubtek-web"],
 };
