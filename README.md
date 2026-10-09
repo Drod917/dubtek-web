@@ -25,7 +25,7 @@ src/
     global.css          Tailwind layers + shared classes (.wrap, .btn, .btn-aqua)
 public/
   favicon/favicon.svg
-  images/og-cover.svg   Placeholder social share image — swap for your own
+  images/og-cover.png   Social share image (1200×630, rendered from the lava hero)
   icons/
   robots.txt
 ```
@@ -59,9 +59,8 @@ yarn preview
    `src/components/*.astro`. Search for "Dubtek" to find every mention.
 2. **Domain** — set your real production URL in `astro.config.mjs` (`SITE_URL`) and
    in the `LocalBusiness` JSON-LD block in `src/layouts/BaseLayout.astro`.
-3. **Social preview image** — replace `public/images/og-cover.svg` with a real
-   1200×630 PNG/JPG export of your brand, and update the `image` prop default in
-   `BaseLayout.astro`.
+3. **Social preview image** — `public/images/og-cover.png` (1200×630) is rendered from
+   the lava hero; replace it with a final brand export when you have one.
 4. **Favicon** — swap `public/favicon/favicon.svg` for your own mark.
 5. **Contact details** — the Contact button email is in `src/components/Landing.astro`.
 
