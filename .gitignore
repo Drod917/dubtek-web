@@ -144,3 +144,6 @@ testng-results.xml
 # 2. No need to add common/security.gitignore separately
 # 3. Test with `git status --ignored` to ensure proper coverage
 
+
+# macOS Finder metadata
+.DS_Store
