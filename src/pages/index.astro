@@ -1,51 +1,14 @@
 ---
 import { lavaEdgeColors, type PaletteName } from "@/styles/palettes";
-import CTA from "../components/CTA.astro";
-import FAQ from "../components/FAQ.astro";
-import Footer from "../components/Footer.astro";
-import Hero from "../components/Hero.astro";
 import Landing from "../components/Landing.astro";
-import Navbar from "../components/Navbar.astro";
-import Process from "../components/Process.astro";
-import Projects from "../components/Projects.astro";
-import Services from "../components/Services.astro";
-import Testimonials from "../components/Testimonials.astro";
-import TrustedBy from "../components/TrustedBy.astro";
-import WhyChooseUs from "../components/WhyChooseUs.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Site isn't ready for public release yet. Flip to `false` to restore the full homepage.
-const UNDER_CONSTRUCTION = true;
 const LANDING_PALETTE: PaletteName = "Medal";
 const LANDING_LIFT = 0.6;
 // Browser chrome and page backdrops match the lava's own edges: near-black up top, charcoal at the floor.
 const lavaEdges = lavaEdgeColors(LANDING_PALETTE, LANDING_LIFT);
 ---
 
-<BaseLayout
-  noindex={UNDER_CONSTRUCTION}
-  themeColor={UNDER_CONSTRUCTION ? lavaEdges.top : undefined}
-  backgroundColor={UNDER_CONSTRUCTION ? lavaEdges.bottom : undefined}
->
-  {
-    UNDER_CONSTRUCTION ? (
-      <Landing palette={LANDING_PALETTE} lift={LANDING_LIFT} />
-    ) : (
-      <>
-        <Navbar />
-        <main>
-          <Hero />
-          <TrustedBy />
-          <Services />
-          <WhyChooseUs />
-          <Process />
-          <Projects />
-          <Testimonials />
-          <FAQ />
-          <CTA />
-        </main>
-        <Footer />
-      </>
-    )
-  }
+<BaseLayout themeColor={lavaEdges.top} backgroundColor={lavaEdges.bottom}>
+  <Landing palette={LANDING_PALETTE} lift={LANDING_LIFT} />
 </BaseLayout>

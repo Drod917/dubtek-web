@@ -19,7 +19,7 @@ src/
   layouts/
     BaseLayout.astro   <head>, SEO tags, JSON-LD, global scroll-reveal script
   pages/
-    index.astro        Homepage — assembles all sections
+    index.astro        Homepage — the Landing lava hero
     404.astro
   styles/
     global.css          Tailwind layers + reusable component classes (.btn, .card, ...)
