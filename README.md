@@ -15,14 +15,14 @@ semantic HTML shipped as static files.
 
 ```
 src/
-  components/       Landing, LavaBackground, and the 404 page's Navbar/Footer
+  components/       Landing (the hero) and LavaBackground (WebGL canvas)
   layouts/
-    BaseLayout.astro   <head>, SEO tags, JSON-LD, global scroll-reveal script
+    BaseLayout.astro   <head>, SEO tags, JSON-LD
   pages/
     index.astro        Homepage — the Landing lava hero
     404.astro
   styles/
-    global.css          Tailwind layers + reusable component classes (.btn, .card, ...)
+    global.css          Tailwind layers + reusable component classes (.wrap, .btn, ...)
 public/
   favicon/favicon.svg
   images/og-cover.svg   Placeholder social share image — swap for your own
@@ -63,8 +63,7 @@ yarn preview
    1200×630 PNG/JPG export of your brand, and update the `image` prop default in
    `BaseLayout.astro`.
 4. **Favicon** — swap `public/favicon/favicon.svg` for your own mark.
-5. **Contact details** — the Contact button email is in `src/components/Landing.astro`;
-   the 404 page's email and social links are in `src/components/Footer.astro`.
+5. **Contact details** — the Contact button email is in `src/components/Landing.astro`.
 
 ## Deploying
 
@@ -96,8 +95,7 @@ The site builds to plain static files (`dist/`), so any static host works.
 
 ## Performance notes
 
-- No client-side JavaScript framework is used — the scripts are the WebGL lava
-  background, the 404 page's nav-scroll effect, and a small scroll-reveal
-  `IntersectionObserver`.
+- No client-side JavaScript framework is used — the only script is the WebGL lava
+  background.
 - Fonts are loaded from Google Fonts with `preconnect` + `font-display: swap`.
 - `prefers-reduced-motion` is respected globally.
